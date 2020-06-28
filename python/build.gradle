@@ -1,0 +1,5 @@
+python {
+    pip 'serial:0.0.97'
+    pip 'crcmod:1.7'
+    pip 'pyusb:1.0.2'
+}
