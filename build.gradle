@@ -1,0 +1,10 @@
+plugins {
+  id "ru.vyarus.use-python" version "2.2.0"
+}
+
+
+subprojects {
+    if (name.startsWith('python')) {
+        apply plugin: 'ru.vyarus.use-python'
+    }
+}
