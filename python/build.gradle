@@ -3,3 +3,8 @@ python {
     pip 'crcmod:1.7'
     pip 'pyusb:1.0.2'
 }
+
+task runPython(type:Exec) {
+   workingDir '.'
+   commandLine 'python3', 'superwatt.py'
+} 
