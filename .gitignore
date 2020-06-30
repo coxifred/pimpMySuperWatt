@@ -1,0 +1,3 @@
+.gradle
+python/.gradle
+python/utils/__pycache__

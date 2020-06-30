@@ -2,6 +2,7 @@ python {
     pip 'serial:0.0.97'
     pip 'crcmod:1.7'
     pip 'pyusb:1.0.2'
+    pip 'requests:2.24.0'
 
     python.scope = VIRTUALENV
     envPath = '.gradle/python'
