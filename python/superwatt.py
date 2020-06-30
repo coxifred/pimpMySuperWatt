@@ -2,7 +2,7 @@ import serial, time, sys, string
 
 
 def main():
-	print "My Name"
+	print("My Name")
 
 
 

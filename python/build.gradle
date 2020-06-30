@@ -2,9 +2,12 @@ python {
     pip 'serial:0.0.97'
     pip 'crcmod:1.7'
     pip 'pyusb:1.0.2'
+
+    python.scope = VIRTUALENV
+    envPath = '.gradle/python'
+
 }
 
-task runPython(type:Exec) {
-   workingDir '.'
-   commandLine 'python3', 'superwatt.py'
+task runPython(type: PythonTask) {
+   command = "./superwatt.py"
 } 
