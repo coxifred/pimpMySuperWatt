@@ -24,7 +24,8 @@ class Functions:
                                 print(aLog)
                 elif ( level == "ERR" or level == "WNG" or level == "DEAD" ):
                         Functions.logred()
-                        print(aLog)
+                        print(aLog,end='')
+                        Functions.lognormal()
                 elif ( level == "ASK" ):
                         Functions.logyellow()
                         print(aLog)
@@ -128,7 +129,7 @@ class Functions:
  
         @staticmethod
         def kommandShell(aKommand):
-                return_output=subprocess.check_output(aKommand,shell=True).rstrip('\n')
+                return_output=subprocess.check_output(aKommand,shell=True).decode('utf-8').rstrip('\n')
                 return return_output
  
         @staticmethod

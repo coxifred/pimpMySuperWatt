@@ -1,0 +1,9 @@
+{
+	"communicationClass" : "serialConnector",
+	"webserver"    : true,
+	"httpPort"     : 80
+
+
+
+
+}

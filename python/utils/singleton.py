@@ -7,7 +7,7 @@ class Singleton(object):
                         self.hostName=''
                         self.debug=False
                         self.version=''
-                        self.params={}
+                        self.parameters={}
                         self.logs=[]
  
         instance = None
