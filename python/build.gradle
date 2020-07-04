@@ -3,6 +3,7 @@ python {
     pip 'crcmod:1.7'
     pip 'pyusb:1.0.2'
     pip 'requests:2.24.0'
+    pip 'flask:1.1.2'
 
     python.scope = VIRTUALENV
     envPath = '.gradle/python'

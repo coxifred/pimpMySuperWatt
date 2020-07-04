@@ -13,19 +13,24 @@ class AbstractConnector():
 
         __metaclass__ = ABCMeta
 
-        def __init__(self,singleton):
-             self.singleton=singleton
-             self.starttime=datetime.datetime.now()
-             self.endtime=""
-             Functions.log("DBG","Instanciation of a Connector Class on "  + self.singleton.hostName + " start=" + str(self.starttime),"CORE")
+        def __init__(self):
+            self.starttime=datetime.datetime.now()
+            self.endtime=""
+            self.singleton=Singleton()
+            Functions.log("DBG","Instanciation of a Connector Class on "  + self.singleton.hostName + " start=" + str(self.starttime),"CORE")
 
         def populateDevices(self):
+            Functions.log("DBG","populateDevices not implemented in AbstractConnector","AbstractConnector")
 
         def connect(self):
-  
+            Functions.log("DBG","connect not implemented in AbstractConnector","AbstractConnector")
+
         def disconnect(self):
+            Functions.log("DBG","disconnect not implemented in AbstractConnector","AbstractConnector")
 
         def read(self):
+            Functions.log("DBG","read not implemented in AbstractConnector","AbstractConnector")
 
         def write(self,data):
+            Functions.log("DBG","write not implemented in AbstractConnector","AbstractConnector")
  

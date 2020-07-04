@@ -9,6 +9,8 @@ class Singleton(object):
                         self.version=''
                         self.parameters={}
                         self.logs=[]
+                        self.connector=''
+                        self.webapp=''
  
         instance = None
  

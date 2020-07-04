@@ -1,9 +1,11 @@
 {
+        "debug"              : true,
 	"communicationClass" : "serialConnector",
-	"webserver"    : true,
-	"httpPort"     : 80
-
-
-
-
+	"webserver"          : true,
+        "webserverDebug"     : true,
+        "webClass"           : "site",
+        "httpBind"           : "0.0.0.0",
+	"httpPort"           : 60000,
+	"mqttServer"         : "",
+	"influxDbUrl"        : ""
 }
