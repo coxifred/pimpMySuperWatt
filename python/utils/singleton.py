@@ -1,3 +1,8 @@
+from flask_apscheduler import APScheduler
+
+
+
+
 class Singleton(object):
         class __Singleton:
                 def __str__(self):
@@ -11,6 +16,7 @@ class Singleton(object):
                         self.logs=[]
                         self.connector=''
                         self.webapp=''
+                        self.scheduler=APScheduler()
  
         instance = None
  

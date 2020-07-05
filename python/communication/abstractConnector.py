@@ -18,6 +18,8 @@ class AbstractConnector():
             self.endtime=""
             self.singleton=Singleton()
             Functions.log("DBG","Instanciation of a Connector Class on "  + self.singleton.hostName + " start=" + str(self.starttime),"CORE")
+            self.populateDevices()
+            self.connect()
 
         def populateDevices(self):
             Functions.log("DBG","populateDevices not implemented in AbstractConnector","AbstractConnector")

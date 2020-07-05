@@ -1,8 +1,9 @@
-import time, sys, socket, argparse, os.path, json
+import time, sys, socket, argparse, os.path, json, threading
 import importlib
 from utils.functions import Functions
 from os import listdir
 from utils.singleton import Singleton
+
 
 
 ## Parameter reader (from file) and args
@@ -36,17 +37,26 @@ def checkParameter(args):
     except Exception as err:
         Functions.log("DEAD","Can't parse file " + configFile + " is it a json file ? details " + str(err),"CORE")
 
+
+
+def startConnector():
+    singleton=Singleton()
+    Functions.log("DBG","Start connector now","CORE")
     # Ok let's start with connector checking
     importlib.import_module('communication')
     Functions.log("DBG","Trying instanciation of " + str(singleton.parameters["communicationClass"]),"CORE")
-    mod=importlib.import_module('.' + singleton.parameters["communicationClass"],package="communication")
+    if not singleton.parameters["communicationClass"] == "":
+        modCom=importlib.import_module('.' + singleton.parameters["communicationClass"],package="communication")
+        aConnectorClass = getattr(modCom, singleton.parameters["communicationClass"])
+        singleton.connector=aConnectorClass()
+    else:
+        Functions.log("DBG","No serial connector defined.","CORE")
 
-    aClass = getattr(mod, singleton.parameters["communicationClass"])
-    singleton.connector=aClass()
-
+def startWeb():
+    singleton=Singleton()
     # Ok now check if we webserver is asked
     if singleton.parameters["webserver"] :
-        Functions.log("DBG","Webserver is asked, starting it","CORE") 
+        Functions.log("DBG","Webserver is asked, starting it","CORE")
         importlib.import_module('web')
         Functions.log("DBG","Trying instanciation of " + str(singleton.parameters["webClass"]),"CORE")
         mod=importlib.import_module('.' + singleton.parameters["webClass"],package="web")
@@ -55,11 +65,15 @@ def checkParameter(args):
     else:
         Functions.log("DBG","Webserver not asked","CORE")
 
-    Functions.log("DBG","Start connector now","CORE")
+
+def waitEnd():
+    while True:
+         Functions.log("DBG","PimpMySuperWatt still alive","CORE")
+         time.sleep(2)
 
 
-## Main start
-def main():
+## start
+def pimpMySuperWatt():
     Functions.log("INF","Instanciate Singleton","CORE")
     singleton=Singleton()
     Functions.log("INF","Starting PimpMySuperWatts on " + socket.gethostname(),"CORE")
@@ -68,8 +82,19 @@ def main():
     parser.add_argument("configFile",help="The absolute path to the configuration file (pimpMySuperWatt.py)")
     parser.add_argument("--debug",help="Debug mode, more verbosity",action="store_true")
     args = parser.parse_args()
+    
     checkParameter(args)
+    # Web starting
+    waitServer=threading.Thread(target=startWeb)
+    waitServer.start()
 
+    # Connector communication starting
+    waitConnector=threading.Thread(target=startConnector)
+    waitConnector.start()
+    
+    waitThread=threading.Thread(target=waitEnd)
+    waitThread.start()
+    waitServer.join()
 
 if __name__ == '__main__':
-    main()
+    pimpMySuperWatt()

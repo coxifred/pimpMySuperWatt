@@ -24,6 +24,19 @@ class site():
         @app.route('/hello')
         def hello():
             return 'Hello, World!'
-
-        app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"],self.singleton.parameters["webserverDebug"])
+        
+        #self.singleton.scheduler.add_job(self.runWebApp,args=[app])
+        self.singleton.scheduler.init_app(app)
+        self.singleton.scheduler.start()
+        #app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"],self.singleton.parameters["webserverDebug"])
+        app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"])
+        #self.runWebApp(app)
         Functions.log("DBG","Site instance started","site")
+
+    def runWebApp(self,app):
+        try:
+            Functions.log("DBG","Trying to start","site")
+            app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"],self.singleton.parameters["webserverDebug"])
+
+        except E:
+            Functions.log("ERR","Error for starting web","site")

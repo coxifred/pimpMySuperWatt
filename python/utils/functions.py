@@ -21,36 +21,43 @@ class Functions:
                 if ( level == "DBG" ):
                         if singleton.debug:
                                 Functions.logdebug()
-                                print(aLog)
+                                print(aLog, flush=True)
                 elif ( level == "ERR" or level == "WNG" or level == "DEAD" ):
                         Functions.logred()
-                        print(aLog,end='')
+                        print(aLog,end='', flush=True)
                         Functions.lognormal()
                 elif ( level == "ASK" ):
                         Functions.logyellow()
-                        print(aLog)
+                        print(aLog, flush=True)
                 else:
                         Functions.lognormal()
-                        print(aLog)
+                        print(aLog, flush=True)
                 if ( level == "DEAD" ):
                         sys.exit(1)
                 singleton.logs.append(aLog)
+                f= open("/tmp/pimpMySuperWatt.log","a+")
+                f.write(aLog + "\r\n")
+                sys.stdout.flush()
  
         @staticmethod
         def logred():
                 sys.stdout.write("\033[1;37;41m")
+                sys.stdout.flush()
  
         @staticmethod
         def logyellow():
                 sys.stdout.write("\033[1;33;40m")
+                sys.stdout.flush()
  
         @staticmethod
         def lognormal():
                 sys.stdout.write("\033[1;37;40m")
+                sys.stdout.flush()
  
         @staticmethod
         def logdebug():
                 sys.stdout.write("\033[1;36;40m")
+                sys.stdout.flush()
  
         @staticmethod
         def requestHttp(request):

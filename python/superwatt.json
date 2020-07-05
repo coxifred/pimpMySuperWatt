@@ -1,6 +1,7 @@
 {
         "debug"              : true,
-	"communicationClass" : "serialConnector",
+	"communicationClass" : "usbConnector",
+        "portPath"           : "/dev/ttyUSB0",
 	"webserver"          : true,
         "webserverDebug"     : true,
         "webClass"           : "site",
