@@ -11,4 +11,4 @@ class QID(AbstractCode):
         response=self.singleton.connector.write("QID",106)
         response=Functions.getFieldFromString(str(response),"\(",1).replace("'","")
         Functions.log("DBG","Raw response: " + str(response),"QID")
-        return QID
+        return str(response)

@@ -2,6 +2,8 @@ import os
 from utils.functions import Functions
 from utils.singleton import Singleton
 from flask import Flask
+from flask import render_template
+
 
 
 class site():
@@ -12,13 +14,18 @@ class site():
 
     def create_app(self):
         # create and configure the app
-        app = Flask("PimpMySuperWatt", instance_relative_config=True)
+        template_dir = os.path.abspath('./web/templates')
+        app = Flask("PimpMySuperWatt", instance_relative_config=True,template_folder=template_dir)
 
         # ensure the instance folder exists
         try:
             os.makedirs(app.instance_path)
         except OSError:
             pass
+
+        @app.route('/')
+        def index():
+            return render_template('index.html')
 
         # a simple page that says hello
         @app.route('/hello')

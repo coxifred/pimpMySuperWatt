@@ -1,4 +1,5 @@
 {
+        "instance"              : "SuperWatt Garage",
         "debug"                 : true,
 	"communicationClass"    : "usbConnector",
         "portPath"              : "/dev/ttyUSB0",
@@ -7,7 +8,21 @@
         "webClass"              : "site",
         "httpBind"              : "0.0.0.0",
 	"httpPort"              : 60000,
-	"mqttServers"           : "",
-	"influxDbUrls"          : "",
+	"mqttServers"           : [
+                                   {
+                                    "mqttServer"     : "192.168.2.30",
+                                    "mqttServerPort" : 1883,
+                                    "mqttTopic"      : "pimpMySuperWatt/superWattGarage"
+                                   }
+                                  ],
+	"influxDbUrls"          : [
+                                   {
+                                    "username"  : "root",
+                                    "password"  : "root",
+                                    "dbName"    : "pimpMySuperWatt",
+                                    "dbHost"    : "192.168.2.51",
+                                    "dbPort"    : "8086"
+                                   }
+                                  ],
         "queryPoolingInterval"  : 30
 }

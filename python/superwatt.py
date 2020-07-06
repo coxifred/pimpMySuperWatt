@@ -1,8 +1,12 @@
 import time, sys, socket, argparse, os.path, json, threading
 import importlib
+import netifaces
+import paho.mqtt.publish as publish
 from utils.functions import Functions
 from os import listdir
 from utils.singleton import Singleton
+from influxdb import InfluxDBClient
+from netifaces import interfaces, ifaddresses, AF_INET
 
 
 
@@ -24,16 +28,25 @@ def checkParameter(args):
     Functions.log("INF","Config file exist " + configFile,"CORE")
     singleton.configFile=configFile
 
-    # Setting current hostname
+    # Setting current hostname & ip
     singleton.hostName=socket.gethostname()
+    for ifaceName in interfaces():
+          addrs=ifaddresses(ifaceName)
+          try:
+              for subAdress in addrs[netifaces.AF_INET]:
+                  if subAdress["addr"] != "127.0.0.1":
+                      Functions.log("INF","Local ip detected " + str(subAdress["addr"]),"CORE")
+                      singleton.ip=str(subAdress["addr"])
+          except Exception as err:
+              Functions.log("WNG","Error while trying to detect local ip " + str(err),"CORE")
+              pass
 
     # Parsing the configFile
     Functions.log("DBG","Parsing configFile " + configFile,"CORE")
     try:
         jsonLine=Functions.loadFileInALine(configFile)
-        Functions.log("DBG","Json config reader " + jsonLine,"CORE")
         singleton.parameters=json.loads(jsonLine)
-        Functions.log("DBG","Json config file successfully loaded " + str(singleton.parameters),"CORE")
+        Functions.log("DBG","Json config file successfully loaded " +  json.dumps(singleton.parameters,indent=4),"CORE")
     except Exception as err:
         Functions.log("DEAD","Can't parse file " + configFile + " is it a json file ? details " + str(err),"CORE")
 
@@ -49,10 +62,35 @@ def poolingRequest():
     Functions.log("DBG","Start pooling request","CORE")
     singleton=Singleton()
     singleton.QPIGS=Functions.command("QPIGS","")
+    json_body=[
+                        {
+                         "measurement": "pimpMySuperWatt",
+                         "tags": {
+                                  "hostname": singleton.hostName,
+                                  "version" : singleton.version,
+                                  "qpi"     : singleton.QPI,
+                                  "qid"     : singleton.QID,
+                                  "qfw"     : singleton.QVFW,
+                                  "qfw2"    : singleton.QVFW2,
+                                  "url"     : "http://" + singleton.ip + ":" + str(singleton.parameters["httpPort"]),
+                                  "instance": singleton.parameters["instance"]
+                                 },
+                         "fields": singleton.QPIGS
+                        }
+               ]
     if not singleton.parameters["influxDbUrls"] == "":
         Functions.log("DBG","Sending now to influxdbs","CORE")
         for db in singleton.parameters["influxDbUrls"]:
-            Functions.log("DBG","Sending now to " + db + " database now","CORE")
+            Functions.log("DBG","Sending now to " + db["dbHost"] + " database now","CORE")
+            dbUser=db["username"]
+            dbPassword=db["password"]
+            dbHost=db["dbHost"]
+            dbPort=db["dbPort"]
+            dbName=db["dbName"]
+            Functions.log("DBG","Sending data to " + dbHost + ":" + dbPort + " user: " + dbUser + " password: " + dbPassword + " database: " + dbName,"CORE")
+            client = InfluxDBClient(dbHost, dbPort, dbUser, dbPassword, dbName)
+            client.create_database(dbName)
+            client.write_points(json_body)
    
     else:
         Functions.log("DBG","No influxdb target specified","CORE")
@@ -60,8 +98,8 @@ def poolingRequest():
     if not singleton.parameters["mqttServers"] == "":
         Functions.log("DBG","Sending now to mqtts","CORE")
         for mqtt in singleton.parameters["mqttServers"]:
-            Functions.log("DBG","Sending now to " + mqtt + " server now","CORE")
- 
+            Functions.log("DBG","Sending now to " + mqtt["mqttServer"] + ":" + str(mqtt["mqttServerPort"]) + " server now","CORE")
+            publish.single(topic=mqtt["mqttTopic"],payload=json.dumps(json_body), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
     else:
         Functions.log("DBG","No mqtt target specified","CORE")
      

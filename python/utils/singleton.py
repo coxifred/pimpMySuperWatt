@@ -20,6 +20,14 @@ class Singleton(object):
                         self.scheduler=APScheduler()
                         self.internalScheduler=BackgroundScheduler()
                         self.internalScheduler.start()
+                        self.ip=''
+                        self.port=''
+
+                        self.QPIGS={}
+                        self.QPI=""
+                        self.QID=""
+                        self.QVFW=""
+                        self.QVFW2=""
  
         instance = None
  
