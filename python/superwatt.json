@@ -1,12 +1,13 @@
 {
-        "debug"              : true,
-	"communicationClass" : "usbConnector",
-        "portPath"           : "/dev/ttyUSB0",
-	"webserver"          : true,
-        "webserverDebug"     : true,
-        "webClass"           : "site",
-        "httpBind"           : "0.0.0.0",
-	"httpPort"           : 60000,
-	"mqttServer"         : "",
-	"influxDbUrl"        : ""
+        "debug"                 : true,
+	"communicationClass"    : "usbConnector",
+        "portPath"              : "/dev/ttyUSB0",
+	"webserver"             : true,
+        "webserverDebug"        : true,
+        "webClass"              : "site",
+        "httpBind"              : "0.0.0.0",
+	"httpPort"              : 60000,
+	"mqttServers"           : "",
+	"influxDbUrls"          : "",
+        "queryPoolingInterval"  : 30
 }

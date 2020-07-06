@@ -33,6 +33,3 @@ class AbstractConnector():
         def read(self):
             Functions.log("DBG","read not implemented in AbstractConnector","AbstractConnector")
 
-        def write(self,data):
-            Functions.log("DBG","write not implemented in AbstractConnector","AbstractConnector")
- 

@@ -6,6 +6,7 @@ import threading
 import hashlib
 import requests
 import warnings
+import importlib
 import json
 from utils.singleton import Singleton
  
@@ -38,6 +39,17 @@ class Functions:
                 f= open("/tmp/pimpMySuperWatt.log","a+")
                 f.write(aLog + "\r\n")
                 sys.stdout.flush()
+       
+        @staticmethod
+        def command(aCommand,aParameter):
+            Functions.log("DBG","Running a command " + aCommand + " with parameter " + aParameter,"CORE")
+            importlib.import_module('communication')
+            Functions.log("DBG","Trying instanciation of " + aCommand,"CORE")
+            mod=importlib.import_module('.' + aCommand,package="communication")
+            aRealCommand = getattr(mod, aCommand)
+            return aRealCommand().send()
+
+                 
  
         @staticmethod
         def logred():

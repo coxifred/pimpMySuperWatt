@@ -1,4 +1,5 @@
 from flask_apscheduler import APScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 
@@ -17,6 +18,8 @@ class Singleton(object):
                         self.connector=''
                         self.webapp=''
                         self.scheduler=APScheduler()
+                        self.internalScheduler=BackgroundScheduler()
+                        self.internalScheduler.start()
  
         instance = None
  

@@ -25,12 +25,9 @@ class site():
         def hello():
             return 'Hello, World!'
         
-        #self.singleton.scheduler.add_job(self.runWebApp,args=[app])
         self.singleton.scheduler.init_app(app)
         self.singleton.scheduler.start()
-        #app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"],self.singleton.parameters["webserverDebug"])
         app.run(self.singleton.parameters["httpBind"],self.singleton.parameters["httpPort"])
-        #self.runWebApp(app)
         Functions.log("DBG","Site instance started","site")
 
     def runWebApp(self,app):

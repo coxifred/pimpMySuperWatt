@@ -37,7 +37,34 @@ def checkParameter(args):
     except Exception as err:
         Functions.log("DEAD","Can't parse file " + configFile + " is it a json file ? details " + str(err),"CORE")
 
+def startDaemons():
+    Functions.log("DBG","Start daemons now","CORE")
+    singleton=Singleton()
+    try:
+        singleton.internalScheduler.add_job(poolingRequest, 'interval', seconds=singleton.parameters["queryPoolingInterval"])
+    except Exception as err:
+        Functions.log("ERR","Error with scheduler " + str(err),"CORE")
 
+def poolingRequest():
+    Functions.log("DBG","Start pooling request","CORE")
+    singleton=Singleton()
+    singleton.QPIGS=Functions.command("QPIGS","")
+    if not singleton.parameters["influxDbUrls"] == "":
+        Functions.log("DBG","Sending now to influxdbs","CORE")
+        for db in singleton.parameters["influxDbUrls"]:
+            Functions.log("DBG","Sending now to " + db + " database now","CORE")
+   
+    else:
+        Functions.log("DBG","No influxdb target specified","CORE")
+
+    if not singleton.parameters["mqttServers"] == "":
+        Functions.log("DBG","Sending now to mqtts","CORE")
+        for mqtt in singleton.parameters["mqttServers"]:
+            Functions.log("DBG","Sending now to " + mqtt + " server now","CORE")
+ 
+    else:
+        Functions.log("DBG","No mqtt target specified","CORE")
+     
 
 def startConnector():
     singleton=Singleton()
@@ -46,9 +73,22 @@ def startConnector():
     importlib.import_module('communication')
     Functions.log("DBG","Trying instanciation of " + str(singleton.parameters["communicationClass"]),"CORE")
     if not singleton.parameters["communicationClass"] == "":
-        modCom=importlib.import_module('.' + singleton.parameters["communicationClass"],package="communication")
-        aConnectorClass = getattr(modCom, singleton.parameters["communicationClass"])
-        singleton.connector=aConnectorClass()
+        try:
+            Functions.log("DBG","Importing module communicationClass " + str(singleton.parameters["communicationClass"]),"CORE")
+            modCom=importlib.import_module('.' + singleton.parameters["communicationClass"],package="communication")
+            Functions.log("DBG","Retrieving class object " + str(singleton.parameters["communicationClass"]),"CORE")
+            aConnectorClass = getattr(modCom, singleton.parameters["communicationClass"])
+            singleton.connector=aConnectorClass()
+            Functions.log("DBG","Launching QPI command","CORE")
+            singleton.QPI=Functions.command("QPI","")
+            Functions.log("DBG","Launching QID command","CORE")
+            singleton.QID=Functions.command("QID","")
+            Functions.log("DBG","Launching QVFW command","CORE")
+            singleton.QVFW=Functions.command("QVFW","")
+            Functions.log("DBG","Launching QVFW2 command","CORE")
+            singleton.QVFW2=Functions.command("QVFW2","")
+        except Exception as err:
+            Functions.log("ERR","Connector exception " + str(err),"CORE")
     else:
         Functions.log("DBG","No serial connector defined.","CORE")
 
@@ -94,6 +134,8 @@ def pimpMySuperWatt():
     
     waitThread=threading.Thread(target=waitEnd)
     waitThread.start()
+
+    startDaemons()
     waitServer.join()
 
 if __name__ == '__main__':
