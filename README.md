@@ -14,7 +14,7 @@ This inverter contains 2 ports for communication (USB and Serial). This program 
 
 # What do you need ?
 
-   - Raspberry or linux compatible hardware.
+   - Raspberry or linux compatible hardware, and an usb cable.
    - Java for gradle dependencies resolutions.
    - Python 3.7.3 (no guarantee that others versions works, viva Python !)
 
@@ -43,7 +43,7 @@ Using pip 20.1.1 from /root/pimpMySuperWatt/python/.gradle/python/lib/python3.7/
 ```
 
 * Note 1: start.sh or debug.sh launch gradlew in background (nohup).
-* Note 2: A log is created under /tmp and names superwatt.log
+* Note 2: A log is created under /tmp and named superwatt.log
 * Note 3: stop.sh to stop it.
 
 # Configuration
