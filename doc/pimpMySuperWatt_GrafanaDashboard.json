@@ -16,20 +16,31 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 9,
-  "iteration": 1594105576338,
+  "iteration": 1594160464692,
   "links": [],
   "panels": [
     {
       "content": "\n# PimpMySuperWatt Grafana Panel\n**Coxifred 2020**\n[GitHub Project](https://github.com/coxifred/pimpMySuperWatt).\n\n\n",
       "datasource": null,
-      "gridPos": {
-        "h": 3,
-        "w": 10,
-        "x": 0,
-        "y": 0
-      },
       "id": 13,
       "mode": "markdown",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "content": "<br>\n<a href=${pimpMySuperWattUrl} target=new >Go to PimpMySuperWatt Interface</a>\n<br>\n<img height=200px src=${pimpMySuperWattUrl}/static/images/pimpMySuperWatt.png>",
+      "datasource": null,
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 6,
+        "y": 0
+      },
+      "id": 18,
+      "mode": "html",
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -305,23 +316,6 @@
       }
     },
     {
-      "content": "<br>\n<a href=${pimpMySuperWattUrl} target=new >Go to PimpMySuperWatt Interface</a>",
-      "datasource": null,
-      "gridPos": {
-        "h": 2,
-        "w": 10,
-        "x": 0,
-        "y": 3
-      },
-      "id": 18,
-      "mode": "html",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transparent": true,
-      "type": "text"
-    },
-    {
       "columns": [],
       "datasource": "pimpMySuperWatt",
       "fontSize": "100%",
@@ -329,7 +323,7 @@
         "h": 19,
         "w": 10,
         "x": 0,
-        "y": 5
+        "y": 7
       },
       "id": 20,
       "pageSize": null,
@@ -1214,5 +1208,5 @@
   "variables": {
     "list": []
   },
-  "version": 34
+  "version": 35
 }
