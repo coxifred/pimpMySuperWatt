@@ -20,5 +20,9 @@ python {
 }
 
 task runPython(type: PythonTask) {
-   command = "./superwatt.py --debug superwatt.json"
+   command = "./superwatt.py superwatt.json"
 } 
+
+task debugPython(type: PythonTask) {
+   command = "./superwatt.py --debug superwatt.json"
+}

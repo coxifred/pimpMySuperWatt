@@ -36,6 +36,7 @@
                      addStat(query.pv_volts +'v',"sun","Pv_volts","huge");
                      addStat(query.pv_watts +'w',"sun","Pv_watts","huge");
                      
+                     $('#dash').transition('tada');
                     } catch(e)
                     {
                       console.log(e);
@@ -103,7 +104,10 @@
 <body >
     	<div class="SuperWattTitle" >PimpMySuperWatt</div>
         <div class="SuperWattProject"><a href="https://github.com/coxifred/pimpMySuperWatt" target=new class="ui label"><i class="github icon"></i>Coxifred 2020</a>
-        <a href="https://paypal.me/FredericCOSTANT/1" target=new class="ui label"><i class="paypal icon"></i>Pay me a beer</a></div>
+        <a href="https://paypal.me/FredericCOSTANT/1" target=new class="ui label"><i class="paypal icon"></i>Pay me a beer</a>
+        <a href="/parameters" target=new class="ui label"><i class="cubes icon"></i>API - Parameters</a>
+        <a href="/inverterParameters" target=new class="ui label"><i class="cubes icon"></i>API - ParametersInverter</a>
+        <a href="/inverterQuery" target=new class="ui label"><i class="cubes icon"></i>API - QueryInverter</a></div>
 
         <div id=parameters class="parameters">
             <table class="ui small compact selectable inverted table">
@@ -118,29 +122,10 @@
               </tbody>
              </table>
         </div>
+        <div class=logo><img class=image src=/static/images/pimpMySuperWatt.png></div>
 
-        <div id=dash style=position:fixed;top:120px;left:450px;>
+        <div id=dash class=dash>
         </div>
   
-        <a href=/parameters target=new >
-        <button class="ui labeled icon button" style=position:fixed;top:0px;right:0px;>
-          <i class="cubes icon"></i>
-          API - Parameters
-        </button>
-        </a> 
-        <a href=/inverterParameters target=new >
-        <button class="ui labeled icon button" style=position:fixed;top:0px;right:200px;>
-          <i class="cubes icon"></i>
-          API - ParametersInverter
-        </button>
-        </a>
-        <a href=/inverterQuery target=new >
-        <button class="ui labeled icon button" style=position:fixed;top:0px;right:450px;>
-          <i class="cubes icon"></i>
-          API - QueryInverter
-        </button>
-        </a>
-       
-
 </body>
 </html>
