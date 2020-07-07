@@ -87,7 +87,7 @@ Simply connect with http://<your_ip>:60000, and wait for informations
 
 API available (See buttons)
 
-![SuperWatt-VM2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/Screenshot_Web.jpg?raw=true)
+![SuperWatt-VM2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/Screenshot_web.jpg?raw=true)
 
 # InfluxDb and Grafana Dashboard
 
