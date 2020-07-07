@@ -78,6 +78,31 @@ def poolingRequest():
                          "fields": singleton.QPIGS
                         }
                ]
+    json_body_parameters=[
+                        {
+                         "measurement": "pimpMySuperWatt_Parameters",
+                         "tags": {
+                                  "hostname": singleton.hostName,
+                                  "version" : singleton.version,
+                                 },
+                         "fields": {
+                                    "qpi"                  : singleton.QPI,
+                                    "qid"                  : singleton.QID,
+                                    "qfw"                  : singleton.QVFW,
+                                    "qfw2"                 : singleton.QVFW2,
+                                    "url"                  : "http://" + singleton.ip + ":" + str(singleton.parameters["httpPort"]),
+                                    "instance"             : singleton.parameters["instance"],
+                                    "debug"                : singleton.parameters["debug"],
+                                    "communicationClass"   : singleton.parameters["communicationClass"],
+                                    "portPath"             : singleton.parameters["portPath"],
+                                    "webserver"            : singleton.parameters["webserver"],
+                                    "webserverDebug"       : singleton.parameters["webserverDebug"],
+                                    "webClass"             : singleton.parameters["webClass"],
+                                    "httpBind"             : singleton.parameters["httpBind"],
+                                    "queryPoolingInterval" : singleton.parameters["queryPoolingInterval"]
+                                   }
+                        }
+               ]
     if not singleton.parameters["influxDbUrls"] == "":
         Functions.log("DBG","Sending now to influxdbs","CORE")
         for db in singleton.parameters["influxDbUrls"]:
@@ -91,6 +116,7 @@ def poolingRequest():
             client = InfluxDBClient(dbHost, dbPort, dbUser, dbPassword, dbName)
             client.create_database(dbName)
             client.write_points(json_body)
+            client.write_points(json_body_parameters)
    
     else:
         Functions.log("DBG","No influxdb target specified","CORE")
@@ -100,6 +126,7 @@ def poolingRequest():
         for mqtt in singleton.parameters["mqttServers"]:
             Functions.log("DBG","Sending now to " + mqtt["mqttServer"] + ":" + str(mqtt["mqttServerPort"]) + " server now","CORE")
             publish.single(topic=mqtt["mqttTopic"],payload=json.dumps(json_body), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
+            publish.single(topic=mqtt["mqttTopic"] + "/parameters",payload=json.dumps(json_body_parameters), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
     else:
         Functions.log("DBG","No mqtt target specified","CORE")
      

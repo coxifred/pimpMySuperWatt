@@ -1,0 +1,23 @@
+.SuperWattTitle{
+  font-size: 70px;
+  position: fixed;
+  top:15px;
+  left:0px;
+}
+
+.SuperWattProject{
+  font-size: 15px;
+  position: fixed;
+  top:75px;
+  left:10px;
+}
+
+.parameters{
+  position: fixed;
+  font-size: 12px;
+  top:150px;
+  left:10px;
+
+
+}
+

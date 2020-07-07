@@ -1,14 +1,8 @@
-    include("javascript/jquery-1.10.2.js");
-    include("javascript/logged.js");
-    include("javascript/modal/jquery.simplemodal.js");
-    include("javascript/modal/basic.js");
-    include("javascript/yui_json.js");
-    include("javascript/calendar.js");
-    include("javascript/dateJs/date.js");
-    
-    include("javascript/jquery-ui-1.10.0.custom.js");
-    include("javascript/jquery-websocket.js");
-    include("javascript/osm/leaflet.js");
+    include("static/javascript/jquery.js");
+    include("static/javascript/jquery-ui.js")
+    include("static/javascript/jquery-websocket.js")
+    include("static/javascript/semantic.js")
+
 
     var popup;
     var ssPopup;
@@ -28,15 +22,11 @@
     			message: message,
     			id: id
     	};
-//    	message.fromUser=fromUser;
-//    	message.action=action;
     	console.log(JSON.stringify(message));
     	return JSON.stringify(message);
     }
 
-    // Quelques fonctions 
 	function getValueFromActionGet(action,type) {
-    	//var host="http://yvasp470:9999/X4450";
     	
 		var retour;
 		var request = $
@@ -51,10 +41,7 @@
 					//alert("ERROR ! " + errorThrown+'\n'+status+'\n'+xhr.statusText);
 					}
 				});
-//		log("Transmission requête Ajax : " + 
-//				 action);
 		request.done(function(msg) {
-//			log("Retour requête Ajax : " + msg);
 			retour = trim(msg);
 		});
 		return retour;
@@ -73,7 +60,7 @@
 		var request = $
 				.ajax({
 					url : theUrl,
-					type : "POST",
+					type : "GET",
 					data : {},
 					async : asyncMode,
 					dataType : "html",
