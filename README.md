@@ -95,6 +95,7 @@ Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.co
 
 ![Grafana](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
 
+
 # Docker installation (to come)
 
 ...
