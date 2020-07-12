@@ -1,6 +1,6 @@
+import re
 import datetime
 import subprocess
-import re
 import sys
 import threading
 import hashlib
@@ -78,7 +78,8 @@ class Functions:
                 r = requests.get(request, verify=False)
                 Functions.log("DBG","Response code: " + str(r.status_code),"Functions")
                 if r.status_code is 200:
-                        body = r.content
+                        body = r.content.decode()
+                        Functions.log("DBG","Response : " + str(body),"Functions")
                         array=body.split("\n")
                         while '' in array:
                                 array.pop(array.index(''))
@@ -116,12 +117,23 @@ class Functions:
                         if string in line:
                                 returnLine=line
                 return returnLine
+
+        @staticmethod
+        def getFirstMatchReInArray(regexp,array):
+                returnLine=""
+                for line in array:
+                        #Functions.log("DBG","Looking for " + regexp + " in line " + line,"Functions")
+                        if re.match(regexp, line) is not None:
+                                #Functions.log("DBG","Match for " + regexp + " in line " + line,"Functions")
+                                return line
  
         @staticmethod
         def getLastMatchReInArray(regexp,array):
                 returnLine=""
                 for line in array:
+                        #Functions.log("DBG","Looking for " + regexp + " in line " + line,"Functions")
                         if re.match(regexp, line) is not None:
+                                #Functions.log("DBG","Match for " + regexp + " in line " + line,"Functions")
                                 returnLine=line
                 return returnLine
  
@@ -166,7 +178,7 @@ class Functions:
         def getDateFormatFromDate(date,format):
                 if format == "default":
                         format='%Y%m%d%H%M%S'
-                return date.datetime.strftime(format)
+                return date.strftime(format)
  
         @staticmethod
         def getDateFormatFromString(stringDate,format):
@@ -187,6 +199,13 @@ class Functions:
         def writeArrayInAFile(file,array):
                 Functions.log("DBG","Writing " + str(len(array)) + " line(s) in " + file,"Functions")
                 aFile = open(file, "w")
+                for line in array:
+                        aFile.write(line + "\n");
+ 
+        @staticmethod
+        def writeArrayInAFileAppend(file,array):
+                Functions.log("DBG","Writing " + str(len(array)) + " line(s) in " + file,"Functions")
+                aFile = open(file, "a+")
                 for line in array:
                         aFile.write(line + "\n");
  

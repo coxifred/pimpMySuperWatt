@@ -1,4 +1,4 @@
-import time, sys, socket, argparse, os.path, json, threading
+import time, sys, socket, argparse, os.path, json, threading, glob
 import importlib
 import netifaces
 import paho.mqtt.publish as publish
@@ -7,6 +7,7 @@ from os import listdir
 from utils.singleton import Singleton
 from influxdb import InfluxDBClient
 from netifaces import interfaces, ifaddresses, AF_INET
+from plugins.abstractPlugin import *
 
 
 
@@ -50,6 +51,31 @@ def checkParameter(args):
     except Exception as err:
         Functions.log("DEAD","Can't parse file " + configFile + " is it a json file ? details " + str(err),"CORE")
 
+    # Instanciate plugin
+    intanciatePlugins()
+
+
+def intanciatePlugins():
+    singleton=Singleton()
+    singleton.plugins=[]
+    for file in sorted(glob.glob('plugins/*/*.py')):
+        moduleName=os.path.basename(file.replace(".py",""))
+        try:
+            Functions.log("DBG","Loading plugins/" + moduleName + "/" + moduleName,"CORE")
+            mod=importlib.import_module("plugins." + moduleName + "." + moduleName)
+            Functions.log("DBG","End loading plugins/" + moduleName + "/" + moduleName ,"CORE")
+            Functions.log("DBG","Trying dynamic instantiation " + moduleName ,"CORE")
+            aClass = getattr(mod, moduleName)
+            instancePlugin = aClass()
+
+            if isinstance(instancePlugin,abstractPlugin):
+                Functions.log("DBG","Plugin " + str(instancePlugin.__class__.__name__.upper()) + " is an instance of AbstractPlugin, populating array","CORE")
+                singleton.plugins.append(instancePlugin)
+            else:
+                Functions.log("ERR","Plugin " + moduleName + " isn't an instance of AbstractPlugin did u extend abstractPlugin ?","CORE")
+        except Exception as err:
+         Functions.log("ERR","Couldn't instantiate " + moduleName + " error " + str(err),"CORE")
+
 def startDaemons():
     Functions.log("DBG","Start daemons now","CORE")
     singleton=Singleton()
@@ -57,6 +83,23 @@ def startDaemons():
         singleton.internalScheduler.add_job(poolingRequest, 'interval', seconds=singleton.parameters["queryPoolingInterval"])
     except Exception as err:
         Functions.log("ERR","Error with scheduler " + str(err),"CORE")
+
+def startPlugins():
+    Functions.log("DBG","Start plugins now","CORE")
+    singleton=Singleton()
+    try:
+        singleton.internalScheduler.add_job(pluginRequest, 'interval', seconds=singleton.parameters["queryPluginInterval"])
+    except Exception as err:
+        Functions.log("ERR","Error with scheduler " + str(err),"CORE")
+
+def pluginRequest():
+    Functions.log("DBG","Start plugin request","CORE")
+    singleton=Singleton()
+    for plugin in singleton.plugins:
+        plugin.runPlugin() 
+        influxData=plugin.influxData()
+        sendToInflux(influxData)
+        sendToMqtt(influxData)
 
 def poolingRequest():
     Functions.log("DBG","Start pooling request","CORE")
@@ -103,6 +146,25 @@ def poolingRequest():
                                    }
                         }
                ]
+    sendToInflux(json_body)
+    sendToInflux(json_body_parameters)
+
+    sendToMqtt(json_body)
+    sendToMqtt(json_body_parameters)
+
+
+def sendToMqtt(json_body):
+    singleton=Singleton()
+    if not singleton.parameters["mqttServers"] == "":
+        Functions.log("DBG","Sending now to mqtts","CORE")
+        for mqtt in singleton.parameters["mqttServers"]:
+            Functions.log("DBG","Sending now to " + mqtt["mqttServer"] + ":" + str(mqtt["mqttServerPort"]) + " server now","CORE")
+            publish.single(topic=mqtt["mqttTopic"],payload=json.dumps(json_body), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
+    else:
+        Functions.log("DBG","No mqtt target specified","CORE")
+
+def sendToInflux(json_body):
+    singleton=Singleton()
     if not singleton.parameters["influxDbUrls"] == "":
         Functions.log("DBG","Sending now to influxdbs","CORE")
         for db in singleton.parameters["influxDbUrls"]:
@@ -116,19 +178,8 @@ def poolingRequest():
             client = InfluxDBClient(dbHost, dbPort, dbUser, dbPassword, dbName)
             client.create_database(dbName)
             client.write_points(json_body)
-            client.write_points(json_body_parameters)
-   
     else:
         Functions.log("DBG","No influxdb target specified","CORE")
-
-    if not singleton.parameters["mqttServers"] == "":
-        Functions.log("DBG","Sending now to mqtts","CORE")
-        for mqtt in singleton.parameters["mqttServers"]:
-            Functions.log("DBG","Sending now to " + mqtt["mqttServer"] + ":" + str(mqtt["mqttServerPort"]) + " server now","CORE")
-            publish.single(topic=mqtt["mqttTopic"],payload=json.dumps(json_body), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
-            publish.single(topic=mqtt["mqttTopic"] + "/parameters",payload=json.dumps(json_body_parameters), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
-    else:
-        Functions.log("DBG","No mqtt target specified","CORE")
      
 
 def startConnector():
@@ -189,6 +240,7 @@ def pimpMySuperWatt():
     args = parser.parse_args()
     
     checkParameter(args)
+
     # Web starting
     waitServer=threading.Thread(target=startWeb)
     waitServer.start()
@@ -201,6 +253,7 @@ def pimpMySuperWatt():
     waitThread.start()
 
     startDaemons()
+    startPlugins()
     waitServer.join()
 
 if __name__ == '__main__':

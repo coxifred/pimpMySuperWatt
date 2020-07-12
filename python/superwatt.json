@@ -22,7 +22,15 @@
                                     "dbName"    : "pimpMySuperWatt",
                                     "dbHost"    : "192.168.2.51",
                                     "dbPort"    : "8086"
+                                   },
+                                   {
+                                    "username"  : "root",
+                                    "password"  : "root",
+                                    "dbName"    : "pimpMySuperWatt",
+                                    "dbHost"    : "gorilla.ddns.net",
+                                    "dbPort"    : "8086"
                                    }
                                   ],
-        "queryPoolingInterval"  : 30
+        "queryPoolingInterval"  : 30,
+        "queryPluginInterval"  : 30
 }
