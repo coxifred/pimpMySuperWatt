@@ -93,7 +93,8 @@ API available (See buttons)
 
 Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.com/coxifred/pimpMySuperWatt/master/doc/pimpMySuperWatt_GrafanaDashboard.json>Click here</a> to download it.
 
-![Grafana](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
+![Grafana](https://github.com/coxifred/pimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
+
 
 # Docker installation (to come)
 
