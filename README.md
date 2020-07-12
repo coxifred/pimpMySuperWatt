@@ -95,6 +95,11 @@ Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.co
 
 ![Grafana](https://github.com/coxifred/pimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
 
+# Plugins
+
+  * **solarPosition**
+    
+    Provides to influxDb sun azimuth and zenith. Just fill python/plugins/solarPosition/solarPosition.json file with you latitude and longitude.
 
 # Docker installation (to come)
 
