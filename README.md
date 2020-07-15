@@ -100,6 +100,10 @@ Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.co
   * **solarPosition**
     
     Provides to influxDb sun azimuth and zenith. Just fill python/plugins/solarPosition/solarPosition.json file with your latitude and longitude.
+    
+    See azimut and zenith in Grafana with your pv production :
+    
+    ![SolarPosition](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/solar_position.jpg?raw=true)
 
 # Docker installation (to come)
 
