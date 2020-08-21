@@ -1,0 +1,10 @@
+echo "Version (1.1): "
+read VERSION
+git pull
+docker build --tag pimpmysuperwatt:$VERSION .
+docker login
+docker tag pimpmysuperwatt:$VERSION docker.io/coxifred/pimpmysuperwatt:$VERSION
+docker push coxifred/pimpmysuperwatt:$VERSION
+
+docker tag docker.io/coxifred/pimpmysuperwatt:${VERSION} docker.io/coxifred/pimpmysuperwatt:latest
+docker push  docker.io/coxifred/pimpmysuperwatt:latest

@@ -1,0 +1,13 @@
+version: "2"
+services:
+  "pimpmysuperwatt":
+    privileged: true
+    image: "coxifred/pimpmysuperwatt"
+    container_name: "pimpmysuperwatt"
+    restart: always
+    ports:
+      - "61000:60000"
+    volumes:
+      - /pimpMySuperWatt:/pimpMySuperWatt/python:Z
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
