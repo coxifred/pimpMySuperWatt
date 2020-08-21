@@ -89,12 +89,23 @@ API available (See buttons)
 
 ![SuperWatt-VM2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/Screenshot_web.jpg?raw=true)
 
-# InfluxDb and Grafana Dashboard
+# InfluxDb and Grafana Dashboard Demo
 
 Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.com/coxifred/pimpMySuperWatt/master/doc/pimpMySuperWatt_GrafanaDashboard.json>Click here</a> to download it.
 
+See the demo ? login guest password guest [Click here for DEMO](http://gorilla.ddns.net:3000/d/9NvfTYMMk/pimpmysuperwatt?orgId=1&refresh=30s)
+
 ![Grafana](https://github.com/coxifred/pimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
 
+# Plugins
+
+  * **solarPosition**
+    
+    Provides to influxDb sun azimuth and zenith. Just fill python/plugins/solarPosition/solarPosition.json file with your latitude and longitude.
+    
+    See azimut and zenith in Grafana with your pv production :
+    
+    ![SolarPosition](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/solar_position.jpg?raw=true)
 
 # Docker installation (to come)
 
