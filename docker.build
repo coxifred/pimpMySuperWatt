@@ -1,4 +1,4 @@
-echo "Version (1.1): "
+echo "Version (1.1):"
 read VERSION
 git pull
 docker build --tag pimpmysuperwatt:$VERSION .
