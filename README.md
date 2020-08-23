@@ -109,6 +109,11 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
 
 # Docker installation:
 
+  *Create you owns configuration's files:*
+  
+    - /superwatt.json
+    - /solarposition.json
+
   *Create this docker compose file:*
   
   ```bash
@@ -128,9 +133,10 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
       - /dev/ttyUSB0:/dev/ttyUSB0
   ```
   
-  then run 
+  *Then simply run:* 
   
   ```bash
   docker-compose up -d
   ```
- 
+  
+  Should be running under http://<your_host>:61000
