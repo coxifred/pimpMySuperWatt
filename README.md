@@ -107,7 +107,30 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
     
     ![SolarPosition](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/solar_position.jpg?raw=true)
 
-# Docker installation (to come)
+# Docker installation:
 
-...
+  *Create this docker compose file:*
+  
+  ```bash
+  version: "2"
+  services:
+  "pimpmysuperwatt":
+    privileged: true
+    image: "coxifred/pimpmysuperwatt"
+    container_name: "pimpmysuperwatt"
+    restart: always
+    ports:
+      - "61000:60000"
+    volumes:
+      - /superwatt.json:/superwatt.json
+      - /solarposition.json:/plugins/solarPosition/solarposition.json
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+  ```
+  
+  then run 
+  
+  ```bash
+  docker-compose up -d
+  ```
  
