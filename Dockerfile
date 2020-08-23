@@ -4,19 +4,20 @@ FROM python:3.7.8-alpine
 # Set the working directory
 WORKDIR /
 
-# Install OpenJDK-8
-RUN apk update && apk add --no-cache openjdk8-jre 
-
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
+# Install gcc
+RUN apk update && apk add --no-cache gcc linux-headers libc-dev musl-dev
 
 # Copy all
-COPY * ./
+ADD python/. ./
+
+# Install dependencies
+RUN apk update && pip install -r requirements.txt
+
 
 # Listening on https
 EXPOSE 60000
 
 # Run the specified command within the container.
-CMD [ "start.sh"]
+#CMD [ "sleep", "600"]
+CMD [ "python","superwatt.py","--debug","superwatt.json" ]
 

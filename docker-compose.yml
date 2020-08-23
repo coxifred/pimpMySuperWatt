@@ -8,6 +8,7 @@ services:
     ports:
       - "61000:60000"
     volumes:
-      - /pimpMySuperWatt:/pimpMySuperWatt/python:Z
+      - /superwatt.json:/superwatt.json
+      - /solarposition.json:/plugins/solarPosition/solarposition.json
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
