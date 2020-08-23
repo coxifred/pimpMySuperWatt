@@ -103,13 +103,21 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
     
     Provides to influxDb sun azimuth and zenith. Just fill python/plugins/solarPosition/solarPosition.json file with your latitude and longitude.
     
+    ```json
+    {
+        "latitude"              : 47.0000,
+        "longitude"             : 6.0000,
+        "dst"                   : 1
+    }
+    ```
+    
     See azimut and zenith in Grafana with your pv production :
     
     ![SolarPosition](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/solar_position.jpg?raw=true)
 
 # Docker installation:
 
-  *Create you owns configuration's files:*
+  *Create your own configuration:*
   
     - /superwatt.json
     - /solarposition.json
@@ -128,7 +136,7 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
       - "61000:60000"
     volumes:
       - /superwatt.json:/superwatt.json
-      - /solarposition.json:/plugins/solarPosition/solarposition.json
+      - /solarPosition.json:/plugins/solarPosition/solarPosition.json
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
   ```
