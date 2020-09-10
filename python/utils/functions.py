@@ -9,6 +9,7 @@ import warnings
 import importlib
 import json
 from utils.singleton import Singleton
+from utils.timeout import TimeoutFunction
  
  
  
@@ -50,6 +51,13 @@ class Functions:
             return aRealCommand().send()
 
                  
+        @staticmethod
+        def timeoutF(function,timeout):
+            try:
+                Functions.log("DBG","Running a timeout function " + str(function) + " with " + str(timeout) + " timeout second(s)","CORE")
+                TimeoutFunction(function, timeout) 
+            except TimeoutFunctionException: 
+                Functions.log("WNG","Too slow, function is running over "  + str(timeout) + " sec(s)","CORE")
  
         @staticmethod
         def logred():
@@ -90,7 +98,11 @@ class Functions:
  
         @staticmethod
         def getFieldFromString(string,delimiter,fieldNumber):
-                return re.split(delimiter,string)[fieldNumber]
+                try:
+                    return re.split(delimiter,string)[fieldNumber]
+                except Exception as err:
+                    Functions.log("WNG","Error while trying to use getFieldFromString on " + string + ", perhaps no separator " + delimiter + ", default behavior is to return the full string, error was "+ str(err),"Functions.getFieldFromString")
+                    return string
  
         @staticmethod
         def getFromFieldFromString(string,delimiter,fieldNumber):

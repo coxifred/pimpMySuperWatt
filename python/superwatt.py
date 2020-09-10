@@ -80,6 +80,7 @@ def startDaemons():
     Functions.log("DBG","Start daemons now","CORE")
     singleton=Singleton()
     try:
+        Functions.log("DBG","Add poolingRequest job to scheduler with " + str(singleton.parameters["queryPoolingInterval"]) + " sec(s) interval","CORE")
         singleton.internalScheduler.add_job(poolingRequest, 'interval', seconds=singleton.parameters["queryPoolingInterval"])
     except Exception as err:
         Functions.log("ERR","Error with scheduler " + str(err),"CORE")
@@ -98,8 +99,8 @@ def pluginRequest():
     for plugin in singleton.plugins:
         plugin.runPlugin() 
         influxData=plugin.influxData()
-        sendToInflux(influxData)
-        sendToMqtt(influxData)
+        Functions.timeoutF(sendToInflux(influxData),2)
+        Functions.timeoutF(sendToMqtt(influxData),2)
 
 def poolingRequest():
     Functions.log("DBG","Start pooling request","CORE")
@@ -146,11 +147,25 @@ def poolingRequest():
                                    }
                         }
                ]
-    sendToInflux(json_body)
-    sendToInflux(json_body_parameters)
+    try:
+        Functions.timeoutF(sendToInflux(json_body),2)
+    except Exception as err:
+        Functions.log("ERR","Error when sending json_body to influxdb " + str(err),"CORE")
 
-    sendToMqtt(json_body)
-    sendToMqtt(json_body_parameters)
+    try:
+        Functions.timeoutF(sendToInflux(json_body_parameters),2)
+    except Exception as err:
+        Functions.log("ERR","Error when sending json_body_parameters to influxdb " + str(err),"CORE")
+
+    try:
+        Functions.timeoutF(sendToMqtt(json_body),2)
+    except Exception as err:
+        Functions.log("ERR","Error when sending json_body to mqtt " + str(err),"CORE")
+
+    try:
+        Functions.timeoutF(sendToMqtt(json_body_parameters),2)
+    except Exception as err:
+        Functions.log("ERR","Error when sending json_body_parameters to mqtt " + str(err),"CORE")
 
 
 def sendToMqtt(json_body):
@@ -162,6 +177,7 @@ def sendToMqtt(json_body):
             publish.single(topic=mqtt["mqttTopic"],payload=json.dumps(json_body), hostname=mqtt["mqttServer"], port=mqtt["mqttServerPort"])
     else:
         Functions.log("DBG","No mqtt target specified","CORE")
+    Functions.log("DBG","End sending now to mqtts","CORE")
 
 def sendToInflux(json_body):
     singleton=Singleton()
@@ -181,6 +197,7 @@ def sendToInflux(json_body):
     else:
         Functions.log("DBG","No influxdb target specified","CORE")
      
+    Functions.log("DBG","End sending now to influx","CORE")
 
 def startConnector():
     singleton=Singleton()

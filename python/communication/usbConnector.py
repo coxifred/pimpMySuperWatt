@@ -24,12 +24,12 @@ class usbConnector(AbstractConnector):
         self.ser.bytesize = serial.EIGHTBITS     #number of bits per bytes
         self.ser.parity = serial.PARITY_NONE     #set parity check: no parity
         self.ser.stopbits = serial.STOPBITS_ONE  #number of stop bits
-        self.ser.timeout = 1                     #non-block read
+        self.ser.timeout = 2                     #non-block read
         #self.ser.timeout = None                     #non-block read
         self.ser.xonxoff = False                 #disable software flow control
         self.ser.rtscts = False                  #disable hardware (RTS/CTS) flow control
         self.ser.dsrdtr = False                  #disable hardware (DSR/DTR) flow control
-        self.ser.writeTimeout = 2                #timeout for write
+        self.ser.writeTimeout = 1                #timeout for write
 
     def connect(self):
         Functions.log("INF","Connecting to device " + self.device,"usbConnector")
