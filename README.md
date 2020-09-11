@@ -77,7 +77,7 @@ Configuration file is superwatt.json
                                     "dbPort"    : "8086"
                                    }
                                   ],
-        "queryPoolingInterval"  : 30                     <- Inverter will be queried every 30s 
+        "queryPoolingInterval"  : 30                     <- Inverter will be queried every 30s (min 2s)
 }
 ```
 
