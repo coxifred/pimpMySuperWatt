@@ -18,11 +18,52 @@ This inverter contains 2 ports for communication (USB and Serial). This program 
    - Java for gradle dependencies resolutions.
    - Python 3.7.3 (no guarantee that others versions works, viva Python !)
 
-# How to install/launch
+# How to install/launch with PYTHON
 
 ```bash
 git clone https://github.com/coxifred/pimpMySuperWatt.git
 cd pimpMySuperWatt
+chmod 755 ./startPython.sh
+./startPython.sh
+```
+output:
+
+```bash
+chmod 755 ./startPython.sh
+./startPython.sh
+PimpMySuperWatt python direct installation
+
+ Check prequisites...
+
+ - Checking python version need 3.7 : OK
+ - Cleaning .venv python : OK
+ - Creating .venv python : OK
+ - Installing dependencies :
+   * crcmod==1.7 : OK
+   * pyusb==1.0.2 : OK
+   * pyserial==3.4 : OK
+   * requests==2.24.0 : OK
+   * flask==2.1.0 : OK
+   * Flask-Caching==1.9.0 : OK
+   * Flask-APScheduler==1.11.0 : OK
+   * apscheduler==3.6.3 : OK
+   * crc16==0.1.1 : OK
+   * influxdb==5.3.0 : OK
+   * paho-mqtt==1.5.0 : OK
+   * netifaces==0.10.9 : OK
+ - Starting PimpMySuperwatt
+2022-04-26 19:59:53.161798 [MainThread] INF CORE Instanciate Singleton
+2022-04-26 19:59:53.170654 [MainThread] INF CORE Starting PimpMySuperWatts on dockerProd
+2022-04-26 19:59:53.170818 [MainThread] INF CORE Analysing arguments
+2022-04-26 19:59:53.172140 [MainThread] INF CORE Debug activated
+```
+
+# How to install/launch with JAVA/GRADLE
+
+```bash
+git clone https://github.com/coxifred/pimpMySuperWatt.git
+cd pimpMySuperWatt
+chmod 755 ./start.sh ./debug.sh
 ./start.sh or ./debug.sh
 ```
 output:
