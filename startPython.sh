@@ -4,12 +4,12 @@ clear
 echo -e " PimpMySuperWatt python direct installation\n"
 echo -e " Check prequisites... \n\n"
 echo -e " - Checking python version need 3.7 : \c"
-VERSION=$(python -V | grep -ci "3.7")
-if [ "${VERSION}" = "0" ]
+VERSION=$(test -f /usr/local/bin/python3.7 && echo 1)
+if [ "${VERSION}" != "1" ]
  then
   echo "KO $(python -V 2>&1)"
-  echo -e "   --> Please override PATH for prior python 3.7\n"
-  echo -e "       export PATH=/usr/lib/python3/bin:\$PATH ? \n"
+  echo -e "   --> Can't find /usr/local/bin/python3.7\n"
+  echo -e "       check install"
   exit 1
 fi
 
