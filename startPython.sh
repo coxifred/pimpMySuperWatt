@@ -22,7 +22,7 @@ if [ "$?" -eq 0 ]
   echo "FAIL can't delete .venv directory \n" ; exit 1
 fi
 echo -e " - Creating .venv python : \c"
-/usr/bin/python3.7 -m venv .venv >/dev/null 2>&1
+/usr/local/bin/python3.7 -m venv .venv
 if [ "$?" -eq 0 ]
  then
   echo "OK"
