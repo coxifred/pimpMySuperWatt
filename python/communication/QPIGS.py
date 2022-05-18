@@ -14,7 +14,10 @@ class QPIGS(AbstractCode):
         Functions.log("DBG","Raw response (before cleaning): " + str(response),"QPIGS")
         response=Functions.getFieldFromString(str(response),"\(",1).replace("'","")
         Functions.log("DBG","Raw response (after cleaning): " + str(response),"QPIGS")
-        grid_volt,grid_freq,ac_volt,ac_freq,ac_va,ac_watt,load_percent,bus_volt,batt_volt,batt_charge_amps,batt_capacity,temp,pv_amps,pv_volts,batt_volt_scc,batt_discharge_amps,raw_status,mask_b,mask_c,pv_watts,mask_d=str(response).split(" ")
+        try:
+            grid_volt,grid_freq,ac_volt,ac_freq,ac_va,ac_watt,load_percent,bus_volt,batt_volt,batt_charge_amps,batt_capacity,temp,pv_amps,pv_volts,batt_volt_scc,batt_discharge_amps,raw_status,mask_b,mask_c,pv_watts,mask_d=str(response).split(" ")
+        except Exception as err:
+            grid_volt,grid_freq,ac_volt,ac_freq,ac_va,ac_watt,load_percent,bus_volt,batt_volt,batt_charge_amps,batt_capacity=str(response).split(" ")
         QPIGS={
                "grid_volt"           : float(grid_volt),
                "grid_freq"           : float(grid_freq),
