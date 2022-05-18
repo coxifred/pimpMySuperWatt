@@ -44,4 +44,5 @@ for DEP in $(cat ./python/requirements.txt)
  done
 
 echo -e " - Starting PimpMySuperwatt"
-.venv/bin/python3 ./python/superwatt.py --debug ./python/superwatt.json
+cd python
+../.venv/bin/python3 ./superwatt.py --debug ./python/superwatt.json
