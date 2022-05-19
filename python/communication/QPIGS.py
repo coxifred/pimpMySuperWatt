@@ -10,7 +10,8 @@ class QPIGS(AbstractCode):
 
     def send(self):
         Functions.log("DBG","Sending QPIGS command","QPIGS")
-        response=self.singleton.connector.write("QPIGS",106)
+        #response=self.singleton.connector.write("QPIGS",106)
+        response=self.singleton.connector.write("QPIGS",206)
         Functions.log("DBG","Raw response (before cleaning): " + str(response),"QPIGS")
         response=Functions.getFieldFromString(str(response),"\(",1).replace("'","")
         Functions.log("DBG","Raw response (after cleaning): " + str(response),"QPIGS")
