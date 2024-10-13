@@ -1,104 +1,82 @@
-# Welcome to PimpMySuperWatt repository
+# Welcome to PimpMySuperWatt repository V2
 
-![Overview](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpMySuperWatt.png?raw=true)
+![Overview](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpMySuperWatt2.png?raw=true)
 
 # What is it ?
 
-This little software allows you to retrieve parameters and real-time status of an inverter. Compatible with superWatt VM2 inverter also knows Voltronic Axpert VMII (3K/5K).
+This is the version 2.0, this version is dedicated to Axpert MAx 7.2K owners (Should also work with others models)
+This software will drive your inverter, expose & stores metrics (including Pylontech Battery stats)
 
-*It's look like this:*
+`InfluxDb` and `Grafana` are embbeded inside the container (Can be disabled).
 
-![SuperWatt-VM2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/superwatt-vm2.png?raw=true)
+Version 1.0 still available [here](https://github.com/coxifred/pimpMySuperWatt/tree/1.0)
 
-This inverter contains 2 ports for communication (USB and Serial). This program works (for the moment) with USB cable.
+*The Axpert max 7.2kw looks like this:*
+
+![Axpert-max7.2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/axpertMax7-2.png?raw=true)
+
+This inverter contains 1 for communication (RJ45 look).
 
 # What do you need ?
 
-   - Raspberry or linux compatible hardware, and an usb cable.
-   - Java for gradle dependencies resolutions.
-   - Python 3.7.3 (no guarantee that others versions works, viva Python !)
+   - ARM Raspberry or AMD64 linux compatible hardware, and a communication cable [communication cable](https://www.amazon.fr/dp/B00QUZY4UG?ref=ppx_yo2ov_dt_b_fed_asin_title)
+   - Python 3.9.18 (no guarantee that others versions works, viva Python !)
+   - docker/docker-compose for simplicity
 
-# How to install/launch with PYTHON
+# Features:
 
-```bash
-git clone https://github.com/coxifred/pimpMySuperWatt.git
-cd pimpMySuperWatt
-chmod 755 ./startPython.sh
-./startPython.sh
-```
-output:
+   - Send all available commands to Axpert Max (All implemented)
+   - API exposure (for Domotic/Automation usages)
 
-```bash
-chmod 755 ./startPython.sh
-./startPython.sh
-PimpMySuperWatt python direct installation
+# Look'n feel:
 
- Check prequisites...
+## Small control-ui (Phone responsive)
 
- - Checking python version need 3.7 : OK
- - Cleaning .venv python : OK
- - Creating .venv python : OK
- - Installing dependencies :
-   * crcmod==1.7 : OK
-   * pyusb==1.0.2 : OK
-   * pyserial==3.4 : OK
-   * requests==2.24.0 : OK
-   * flask==2.1.0 : OK
-   * Flask-Caching==1.9.0 : OK
-   * Flask-APScheduler==1.11.0 : OK
-   * apscheduler==3.6.3 : OK
-   * crc16==0.1.1 : OK
-   * influxdb==5.3.0 : OK
-   * paho-mqtt==1.5.0 : OK
-   * netifaces==0.10.9 : OK
- - Starting PimpMySuperwatt
-2022-04-26 19:59:53.161798 [MainThread] INF CORE Instanciate Singleton
-2022-04-26 19:59:53.170654 [MainThread] INF CORE Starting PimpMySuperWatts on dockerProd
-2022-04-26 19:59:53.170818 [MainThread] INF CORE Analysing arguments
-2022-04-26 19:59:53.172140 [MainThread] INF CORE Debug activated
-```
+![Overview](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true)
 
-# How to install/launch with JAVA/GRADLE
+## Embedded `Grafana` dashboard
+
+
+
+# `Docker` installation AMD64
 
 ```bash
 git clone https://github.com/coxifred/pimpMySuperWatt.git
 cd pimpMySuperWatt
-chmod 755 ./start.sh ./debug.sh
-./start.sh or ./debug.sh
+docker-compose up
 ```
-output:
+
+# Docker installation ARM (Raspberry)
+
+> To do.
+
+# Installation without `Docker` (You have to manage yourself `Grafana` and `InfluxDb` installations)
+
+> Please use python 3.9.18 (i had trouble with fresh versions)
 
 ```bash
-
-> Task :python:checkPython
-Using python 3.7.3 from /root/pimpMySuperWatt/python/.gradle/python (.gradle/python/bin/python)
-Using pip 20.1.1 from /root/pimpMySuperWatt/python/.gradle/python/lib/python3.7/site-packages/pip (python 3.7)
-
-> Task :python:runPython
-[python] .gradle/python/bin/python ./superwatt.py --debug superwatt.json
-         2020-07-07 22:57:11.934332 [MainThread] INF CORE Instanciate Singleton
-         2020-07-07 22:57:12.101406 [MainThread] INF CORE Starting PimpMySuperWatts on pimpMySuperWatt
-         2020-07-07 22:57:12.102219 [MainThread] INF CORE Analysing arguments
-         2020-07-07 22:57:12.114759 [MainThread] INF CORE Debug activated
-         2020-07-07 22:57:12.141037 [MainThread] INF CORE Config file exist /root/pimpMySuperWatt/python/superwatt.json
+git clone https://github.com/coxifred/pimpMySuperWatt.git
+cd pimpMySuperWatt
+python3 -m venv venv
+chmod a+x venv/bin/*
+venv/bin/activate
+venv/bin/pip3 install -r requirements.txt
+./start.sh
 ```
-
-* Note 1: start.sh or debug.sh launch gradlew in background (nohup).
-* Note 2: A log is created under /tmp and named superwatt.log
-* Note 3: stop.sh to stop it.
 
 # Configuration
 
-Configuration file is superwatt.json
+## Configuration file is superwatt.json
 
 ```json
 {
-        "instance"              : "SuperWatt Garage",    <-  Free label
-        "debug"                 : true,                  <- debug mode 
+        "instance"              : "AxpertMax 7.2K",      <-  Free label
+        "debug"                 : true,                  <- debug mode
+        "debugClass"            : [],                    <- you can specify custom classes for debug, ie: ["CORE.queryExternalPower","CORE.sendToInflux"]
         "communicationClass"    : "usbConnector",        <- Class connector (usbConnector for the moment)
         "portPath"              : "/dev/ttyUSB0",        <- the port Path
         "webserver"             : true,                  <- If you want a web interface
-        "webserverDebug"        : true,                  <- debug web 
+        "webserverDebug"        : false,                 <- debug web 
         "webClass"              : "site",                <- Class for app web.
         "httpBind"              : "0.0.0.0",             <- Binding ip address for web
         "httpPort"              : 60000,                 <- Port for http interface      
@@ -123,22 +101,48 @@ Configuration file is superwatt.json
 
 }
 ```
+## Docker-compose
 
+```yaml
+version: "2"
+services:
+  "pimpmysuperwatt":
+    container_name: "pimpmysuperwatt"
+    privileged: true
+    image: "pimpmysuperwatt:2.0"
+    environment:
+       # Start or not embedded services
+       GRAFANA_START: "Y"
+       INFLUXDB_START: "Y"
+       # Debug mode, see also debugClass in superwatt.json
+       # PIMP_DEBUG: "Y"
+    #volumes:
+      # Override configuration if needed
+      #- /root/pimpmysuperwatt/superwatt.json:/pimpmysuperwatt/superwatt.json
+      #- /root/pimpmysuperwatt/plugins/solarposition/solarposition.json:/pimpmysuperwatt/plugins/solarPosition/solarposition.json
+
+      # Persist your influxdb data
+      #- /root/pimpmysuperwatt/influxdb/data:/influxdb-1.8.10-1/data
+
+      # Persist your grafana modifications
+      #- /root/pimpmysuperwatt/grafana/data:/grafana-v11.2.2/data
+     
+      
+    restart: always
+    ports:
+      # PimpMySuperWatt UI
+      - "61000:61000"
+      # Grafana dashboard
+      - "61001:3000"
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+```
 # Web Interface
 
-Simply connect with http://<your_ip>:60000, and wait for informations
+Simply connect with:
 
-API available (See buttons)
-
-![SuperWatt-VM2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/Screenshot_web.jpg?raw=true)
-
-# InfluxDb and Grafana Dashboard Demo
-
-Here is a sample dashboard for grafana. <a href=https://raw.githubusercontent.com/coxifred/pimpMySuperWatt/master/doc/pimpMySuperWatt_GrafanaDashboard.json>Click here</a> to download it.
-
-See the demo ? login guest password guest [Click here for DEMO](http://gorilla.ddns.net:3000/d/9NvfTYMMk/pimpmysuperwatt?orgId=1&refresh=30s)
-
-![Grafana](https://github.com/coxifred/pimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true)
+- [x] http://<your_ip>:61000 and wait for informations
+- [x] http://<your_ip>:61001 for grafana dashboard
 
 # Plugins
 
@@ -158,36 +162,19 @@ See the demo ? login guest password guest [Click here for DEMO](http://gorilla.d
     
     ![SolarPosition](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/solar_position.jpg?raw=true)
 
-# Docker installation:
+# Troubleshootings:
 
-  *Create your own configuration:*
-  
-    - /superwatt.json
-    - /solarposition.json
+> Log says can't connect to usb
 
-  *Create this docker compose file:*
-  
-  ```bash
-  version: "2"
-  services:
-  "pimpmysuperwatt":
-    privileged: true
-    image: "coxifred/pimpmysuperwatt"
-    container_name: "pimpmysuperwatt"
-    restart: always
-    ports:
-      - "61000:60000"
-    volumes:
-      - /superwatt.json:/superwatt.json
-      - /solarPosition.json:/plugins/solarPosition/solarPosition.json
-    devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0
-  ```
-  
-  *Then simply run:* 
-  
-  ```bash
-  docker-compose up -d
-  ```
-  
-  Should be running under http://<your_host>:61000
+  Wait at least to the 40 tries, sometimes, it takes time to connect.
+
+> No data available in `Grafana` dashboard
+
+  Wait at least 5mn after docker start.
+
+
+# TODO:
+
+- [] Raspberry `Docker` build.
+- [] Enable/Disable debug from UI.
+- [] Events history diplay on UI.
