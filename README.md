@@ -44,6 +44,8 @@ This inverter contains 1 port for computer communication (RJ45 look).
 
 <img  src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana3.jpg?raw=true">
 
+<img  src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana4.jpg?raw=true">
+
 # `Docker` installation AMD64
 
 ```bash
