@@ -1,6 +1,6 @@
 # Welcome to PimpMySuperWatt repository V2
 
-![Overview](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpMySuperWatt2.png?raw=true)
+<img height=400px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpMySuperWatt2.png?raw=true" > 
 
 # What is it ?
 
@@ -32,7 +32,7 @@ This inverter contains 1 for communication (RJ45 look).
 
 ## Small control-ui (Phone responsive)
 
-![Overview](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true)
+<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true">
 
 ## Embedded `Grafana` dashboard
 
