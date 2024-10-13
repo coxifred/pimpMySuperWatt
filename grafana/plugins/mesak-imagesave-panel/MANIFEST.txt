@@ -1,0 +1,35 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "mesak",
+  "signedByOrgName": "mesak",
+  "plugin": "mesak-imagesave-panel",
+  "version": "1.0.3",
+  "time": 1688809810681,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "plugin.json": "b23d981702b1b2fb4fe8626e1ab344100c2e6a5d0cb4f0726dc096f97ca9d67f",
+    "CHANGELOG.md": "e784e82205270a9e2e4ef198c2c78d3eceab11abca6d89d042574e2f29800345",
+    "LICENSE": "3c7bddad5bbad5b43e90c0e117bcf2737f4c2a09e8fd6ee6d915942e03466d77",
+    "img/logo.svg": "9f91bc8b20f84cc45ecf0247ff1470537bd3466878ec731e469b21c454a6e10a",
+    "img/screenshot.jpg": "26bd6b8f4386e62e7999e286aafc13151a88effff1d5ac5426785f9fd294ce20",
+    "README.md": "4bbad8dc0a2a8aaf78c34894fdea0287e0e919ea7fb87994bf1cf27e3194ca75",
+    "module.js.map": "6fdfe1c4059ee35d5a4c48a9104507b20e213b7e460cbabb6dd5d2bee986e02f",
+    "module.js": "a2be48228856d5c5e117337ae292c4192a4cad2b4f8988ec90cb3c12587a24bc"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrkEARMKAAYFAmSpMVIAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5+WUAgkBZPDJBHuN6kZ0QDwEwPk08/QxOnEsy3uIZXOrtTOIr1gonpfH
+YL0D6c2g4BRVnnVkbQCmJxkZe6edI6N3otS7HZwCCQGj4GEhNEmtLyYxcyxc
+xasy3TC3UGY965pQG+gpm+JFGzhBVPK6nFfTdpROOJSggfXK0sR6oGe82F0E
+dvO3iZcU+w==
+=gJXr
+-----END PGP SIGNATURE-----

@@ -1,0 +1,40 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "marcusolsson",
+  "signedByOrgName": "Marcus Olsson",
+  "plugin": "marcusolsson-calendar-panel",
+  "version": "2.3.1",
+  "time": 1699322634853,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "plugin.json": "acb25bf006cd7e88830d66471949f58ac97a24bf8a00c8abbcf2ec444316a01f",
+    "LICENSE": "f61b4f79d7a9894e10398b6fd55ce533b206a27df5e045a58eca3ea788cc9119",
+    "module.js.map": "40cadef85581551362cd730e029a054cf2f1598b3d37c5fd9d021e30d2197c0f",
+    "module.js": "ff252d599e6c7eb9e488b295d65a43996ba9533be2e10524d7b80b8cfee0e690",
+    "README.md": "b4c08407afd723c01bd59cedeb81db0386840c2d5ba524ad43037aaebe191801",
+    "img/logo.svg": "6cf11a1e38150c733a20ee6037bab975e3d654360f5793cf2bddc940da2d83c1",
+    "img/screenshot.png": "9dd8ad32cada26fdd6f355e46f768e9ca7bfe9bb98f17955696d0390181c5690",
+    "CHANGELOG.md": "2d64ea89f768612e58eeeca84cd604e75390789da6a25229dc8b888b73658dea",
+    "i18n/translations/es.json": "aeff4e4a58f82a2f8760cc3ed05bdb604c05657671f486a77dd1eed83719a80d",
+    "i18n/translations/zh.json": "c166e6d3b2df6a1cb5fa8113a735348cccba048b7fa6f0723037dba3144324e8",
+    "i18n/translations/fr.json": "878a4db7bfe609419dd655d6f75b8218bbb7fa706945fed18f11eac69f122b03",
+    "i18n/translations/en.json": "5f66b92b90331d5ac777fe553889199f254d2da2a12cd2fdedf1021686b0379c",
+    "i18n/translations/de.json": "c107c36fa4cc6f73f4ea94e5d5bea4ff4d2ec98f85c89d6d12f671f702133201"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrkEARMKAAYFAmVJmwsAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm52X3AgkBQxsr0mHGZcnm2zcn81u9cE+sKyUguKg8H+3Jhc9LaxdbDKBQ
+AFbOn75Jt436svOygNnIsNzZyPeYNVEoXfP+3JMCCQEOGb5xH4Tb1wTSjD1R
+SLwpVFAXan+dMZFkqY7jPBExnkezfR06TBBPDkp2f3+YnGK9GqLFFIGrpoMM
+DIeQn8hhFQ==
+=IeuN
+-----END PGP SIGNATURE-----

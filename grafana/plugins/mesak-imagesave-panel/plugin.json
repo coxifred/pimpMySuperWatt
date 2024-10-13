@@ -1,0 +1,34 @@
+{
+  "type": "panel",
+  "name": "Image Save",
+  "id": "mesak-imagesave-panel",
+  "skipDataQuery": true,
+  "info": {
+    "keywords": [
+      "image",
+      "panel"
+    ],
+    "description": "save image to grafana",
+    "author": {
+      "name": "Mesak",
+      "url": "https://mesak.tw"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [],
+    "screenshots": [
+      {
+        "name": "Options",
+        "path": "img/screenshot.jpg"
+      }
+    ],
+    "version": "1.0.3",
+    "updated": "2023-07-08"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=7.0.0",
+    "plugins": []
+  }
+}

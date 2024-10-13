@@ -1,0 +1,14 @@
+crcmod==1.7
+pyusb==1.0.2
+pyserial==3.4
+requests
+flask
+Flask-Caching
+Flask-APScheduler
+apscheduler
+crc16==0.1.1
+influxdb
+paho-mqtt
+netifaces
+usb_resetter==1.3.0
+Werkzeug

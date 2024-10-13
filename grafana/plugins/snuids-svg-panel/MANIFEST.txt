@@ -1,0 +1,36 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "snuids",
+  "signedByOrgName": "Arnaud Marchand",
+  "plugin": "snuids-svg-panel",
+  "version": "1.0.0",
+  "time": 1614847910659,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
+    "module.js.map": "80b2645727f687053bfa3d1fbd9555db5a8a687e2c64be428f84edb483beb7ba",
+    "plugin.json": "dd57bde6f49ac23024f1fecf1cb0a8ce7a5bf5f46ef203197d9c1e3566757e7a",
+    "README.md": "6b8e9860805a082f52a0be31ac085056d6db80cdfe63968f39cc20430d41dc6c",
+    "img/svg-screenshot-1.png": "37a0019d722c4c1447270926657a5e7d953c4178709e3961c8c2f6d33c23875e",
+    "img/svg-screenshot-2.png": "c90b58e8d17f263fb7aea4cc3445037739085445a038b23ad7cb0f05bcfe9a28",
+    "img/svg-panel.png": "af9bdc4ce551b63dafdc9bed29b3d6b3ce360922cc53d3ad4724adbd3c1bba1b",
+    "img/logo.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
+    "module.js": "e8effe16a383050851c3d64ebf8df1443d94caee107696e5ee23a7d2cf6c054b"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.1
+Comment: https://openpgpjs.org
+
+wqIEARMKAAYFAmBAn6YACgkQfk0ManCIZucqiAIJAcaG2pM4esWG7I1jKEhm
+U0aHqBLf7ciHQE083VDc+mAeVYnP8DrQQWF8wfJkEFrNYdS/gKQa5K+wPbP4
+rzKVddIyAgkBhIG4hL3zjPEnREaSGqE1eh3eeAHUS7xQy08tF2fCeDJLdW6N
+n+Bfm2TVa7howBzo/wDXL+kIGoIDk7sPNI1Kjos=
+=/UV0
+-----END PGP SIGNATURE-----

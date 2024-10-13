@@ -1,0 +1,40 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "grafana",
+  "signedByOrgName": "Grafana Labs",
+  "plugin": "mtanda-google-calendar-datasource",
+  "version": "1.0.5",
+  "time": 1622740977308,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "annotations_query_ctrl.js": "7b28b4be7845d7e47a96e43ab2b51e1b5ad3af45536c3c5c21cf51f0a77e6402",
+    "images/annotation_config.png": "b78e4ce3045124117f284fb237a5212a66096a79b1c1074bc437d439ac77bb58",
+    "images/calendar.png": "9da9d5d2d17b3a77b685e3871569df5af61c5903a64bbcf978a84e179744f8f3",
+    "module.js.map": "ea2d216ed08788f1c3f3b22355148d3315c09225c2233cce75aebe5a64382664",
+    "annotations_query_ctrl.js.map": "e6f2cdd2d33e0b924ed8f11f295387cc4307a496deba98ac0b529549d4084aa8",
+    "plugin.json": "8e2fc14142206a793c3705abd523bad1b498ecc698754253a930387a147369d1",
+    "libs/script.js": "5a9fc24718ab2cec7aad29ab3c753b7bd9cc36daff3bc3f71330970824dd97b4",
+    "libs/script.js.map": "4ad52f592f9598985966008505603ed9142e702276bd9b499b8012a472765fe2",
+    "README.md": "694562b6e9862f547d7da1b1befa5c7d0f715e5524435a70ac25277be169e1ff",
+    "module.js": "693895d9515ed09aefdb1bca6316c762936a72bf9ada0549fae272f85caae9d6",
+    "datasource.js.map": "d10ecf51c517d24aa90d0cecc93150ed5858b1e8dcc6bf8524894b3da8fd04dc",
+    "datasource.js": "520bf199ddc7afa563df8a3c056a070c57466c0b0a9ff4f893c66d1e666cd727",
+    "partials/annotations.editor.html": "1c269c4668fdceeeb869cf1273e17f6977f5fade46165ed5babdfa467a381889",
+    "partials/config.html": "24bcb07076f1c8f472d660188ad8ab5f40c7fa01f8404b1be4d164509f14d5a8"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.1
+Comment: https://openpgpjs.org
+
+wqAEARMKAAYFAmC5D/EACgkQfk0ManCIZucycwIHf1Rj4KBxWGcyV2C+wr5T
++u8tNden0umXIk6rxC+o5oOijDhrfuXhB461vc0e3PXBwF5tyVQpq/AV3+9v
+rjECYDECB0BT8lvmBRvPT3QtW+rxOa7iczamT3pR28rRTD1pBHfCHZAHKdtG
+19QHrqYN91Cw4hZKcmuDf6/0cGQNa0EpsXWl
+=kvLh
+-----END PGP SIGNATURE-----

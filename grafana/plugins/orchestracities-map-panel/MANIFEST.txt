@@ -1,0 +1,59 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "orchestracities",
+  "signedByOrgName": "Orchestra Cities by Martel",
+  "plugin": "orchestracities-map-panel",
+  "version": "1.4.4",
+  "time": 1660297224746,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "CHANGELOG.md": "091a637981f56914ea0fa4a4a15be49a93979ab300ece6869adecd62ed78b37a",
+    "module.js.map": "932499cbc7948be5cad14ee0caded66a388289e5a253243ae8cd5e167c1b53db",
+    "LICENSE": "02426e3445ed53344dd637cdc13e26e5977d03546e23874ffbc6ead7ef08a130",
+    "module.js": "6e9489362e4013d71c6bc1452cbf6a0ebd751bbfc3f9a601cba2a9dbfbd4316f",
+    "img/popup.png": "aa296a0582ab6503f0ca4bf4a15bb5130a4ad91c6f819a70fb4ac6067262845b",
+    "img/idw.png": "4169f390cbd6d750e223ab6555be8ad00d7a90fe59156e04eef14e3b8d0b0a73",
+    "img/example.png": "c833b2b46503e204c30d2dda4869533b656c26cdf496f4bbc5351275f4c818ad",
+    "img/options.png": "f89a3600fe15a3c13044dd1dcb7b24a42aa063d76c1f04ec583915d31a6a2f90",
+    "img/icn-map-panel.svg": "868afddfbffb3080432a042d52efdb73854c8547e9ef5fbef2935a5d0e5941ca",
+    "gazetteer/countries.json": "7f44c25dbb5b5f2b4391b13bd0f8af1d39b4e3b90e6206020252c66d6bf09a6d",
+    "gazetteer/usa-states.json": "61259d1e20642019d44e88c26c026e272c2c7dfd241335b78bd7a9702842d79b",
+    "module.js.LICENSE.txt": "2b60334f9580794b513ff28464b63cd07cf4f1701c432acb054460707a8cf763",
+    "fonts/fontmaki.ttf": "6218cb672c39c5347f93d16dab457b006a27c6ec991ae12b4735461ad8256e6e",
+    "fonts/fontmaki2.woff": "881e635de936aa59bdd7873082569328d5577863785ceada78bb70fbf7e8fb6a",
+    "fonts/fontmaki.woff": "29fa5bbb6a9f08a6178791d9dd08a2bf167cee768cf082446e5a0a388dd377c7",
+    "fonts/fontmaki2.ttf": "cb1ca5efb392b2d7886007601b374e464abf5869bffdf8780488cacfa0d9408d",
+    "fonts/fontmaki2.eot": "4de9c23efa61d6dcaea785188680ebc95704686414664f30db993344240663fb",
+    "fonts/fontmaki.eot": "e631a1739c682b22c94444a11c8d8ef338044d3aa043f6ef6a20f3d5130b16c2",
+    "fonts/fontmaki2.woff2": "1f51de5be0072eb61a084626200effdfe0b0842edecaf7641dd2ee02c59457df",
+    "plugin.json": "0c4ad983d76a0f57add9c98c19276b1a401870fd5ce416b07956a159948ee3b7",
+    "static/css/fontmaki2.css": "747c6336d1b243be3175262cdf5dd3b439a9c442d9d666d7e0ef026ae3a19278",
+    "static/css/fontmaki.css": "34e7a6b1dfc3c78dc5c72235b0f40c1a35a304e1fc4d6855dbb40971a499c0a5",
+    "static/font/fontmaki2.svg": "ada55f6c50ed1e7732b2448130beadfff539417192978649b025cb3da47cf4de",
+    "static/font/fontmaki.ttf": "6218cb672c39c5347f93d16dab457b006a27c6ec991ae12b4735461ad8256e6e",
+    "static/font/fontmaki.svg": "578797ca10b827c687735f5d808d99112e08c856f7f90377626d78cc32cb313c",
+    "static/font/fontmaki2.woff": "881e635de936aa59bdd7873082569328d5577863785ceada78bb70fbf7e8fb6a",
+    "static/font/fontmaki.woff": "29fa5bbb6a9f08a6178791d9dd08a2bf167cee768cf082446e5a0a388dd377c7",
+    "static/font/fontmaki2.ttf": "cb1ca5efb392b2d7886007601b374e464abf5869bffdf8780488cacfa0d9408d",
+    "static/font/fontmaki2.eot": "4de9c23efa61d6dcaea785188680ebc95704686414664f30db993344240663fb",
+    "static/font/fontmaki.eot": "e631a1739c682b22c94444a11c8d8ef338044d3aa043f6ef6a20f3d5130b16c2",
+    "static/font/fontmaki2.woff2": "1f51de5be0072eb61a084626200effdfe0b0842edecaf7641dd2ee02c59457df",
+    "README.md": "fe47b214fc8c11ab0b85cc9edd4559bc090b13afa7fb3db74ef698e272cc5d51"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrgEARMKAAYFAmL2IAgAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5w3XAgUfXEvncXnRKmsDvsUcnqor4tEzI5/C9DaRQ0n374ybGFEJoAjT
+ZZSrqnqhV3MJx+8/WIOlsb0OQ2jTh2OOlvaXJgIJAQDxoBn/HpcTKwDF1i5r
+zCS51zLhHAkVlumMrx2Pwe46vFqjq+37bVw+PRJXTxxDNdt3gg3Af3q3fGM9
+rwCwGT31
+=eTa/
+-----END PGP SIGNATURE-----

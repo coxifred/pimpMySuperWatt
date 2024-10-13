@@ -1,0 +1,40 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "williamvenner",
+  "signedByOrgName": "williamvenner",
+  "plugin": "williamvenner-timepickerbuttons-panel",
+  "version": "4.1.1",
+  "time": 1619648821677,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "module.js": "97e622108cabe86d6c3cd4ae04cd27a8a9021fe3542f6b9bb96df48f65fe1be1",
+    "module.js.map": "4885a95056107f3d7f2be1d17f8b2645db970915a03ee6da98b3ee3cce8502d9",
+    "plugin.json": "088827e2f4667260821407e537d93be1918c3b9576d413d4f4d3031d350b72db",
+    "README.md": "eb4aa5123a07cce111874d05654dea59b2af594b5fcb53ddf36b3a7eef289a14",
+    "CHANGELOG.md": "f039df40cb9e6dffcd8eb814227ba03e47f686d447bfb45e5eae8bdf83fa9465",
+    "img/logo.svg": "dae493f9d816112d48c5c7b6dda1027fff45fb6e9b4547c0700469065e80d54b",
+    "img/panel.png": "53f707613cbf1ac1ded2c5830242190b154cba0ff7851b333ceaed84912f5ff0",
+    "img/displayStyleButton.png": "a18858d8672379840c6493548268c338d179cbbd27e0a9360f1c9013daa8e7c0",
+    "img/panelDropdown.png": "3090965ee6835d0014e4990c2484d7fe1a218401c192a3b9d27ef870be96211c",
+    "img/displayStyleDropdown.png": "e7dea74099de770968abfe36deaa8e37c8554ce2c2ad4546867229858d1bcad0",
+    "img/panelHorizontal.png": "9b33b001051b99be911457d7e03d08811a2555682f46dd4df338f34a731cbf7a",
+    "img/panel_options.png": "d119304af537b87f3fa4f24f62d499570527c6daf2992c273cea23ddde0726f7",
+    "img/sql_queries.png": "3d56ac4bb6fc9d918ce723b569d2dfef3d525d0a9f363adc3bf3f7740b2e4650"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.1
+Comment: https://openpgpjs.org
+
+wqEEARMKAAYFAmCJ4TUACgkQfk0ManCIZudC9AIJAX3v5zuSn419DhHzZA00
+XIkM7NehePAwIUAsWmP6p2JOh+Nz9zjIk7cz8UhyMY1EmSR9BZu3XxXGpKrG
+3cWVdiX4AgiCsl9Sx38/U3gRcTwQq61a5Td61EjFCX/RAMS3nDvGowFwhSvY
+4b43wIIA8NUHh9zzH02FbWdBlsW3uj9AQM7DuA==
+=zkhP
+-----END PGP SIGNATURE-----

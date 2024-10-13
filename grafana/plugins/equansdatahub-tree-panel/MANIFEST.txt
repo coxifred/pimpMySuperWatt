@@ -1,0 +1,43 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "equansdatahub",
+  "signedByOrgName": "EQUANS Zuid-Nederland bv",
+  "plugin": "equansdatahub-tree-panel",
+  "version": "1.4.2",
+  "time": 1709131929470,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "README.md": "9159856d7697cb30e51398f0be84f441e23dca792ebe551717dbc14859106e0a",
+    "plugin.json": "dcde49c959f0e4dd535549354b7a66653e287037133bfacb954f9a236a509dc0",
+    "module.js.LICENSE.txt": "f429b03c0833991f7633200c110b506f5fdc83c438fdc53eae8dbe54675e5fe2",
+    "CHANGELOG.md": "e79fb2913dcab537143f8226b68e2b77e141bf63cd198116fd62d5e4eae74ce5",
+    "img/Screenshot tree options.png": "a6f6f344b518954dcbf15f59803a2bcb367946e636e09ede9383f39713b10063",
+    "img/image.png": "39c8af24b00873a78e00530fecb9ab5409725d2618282231ada443ee98a0cd1e",
+    "img/logo.svg": "f71267944abc0cfca5f241e74d70ffe8fbec48f2cf7697ba8fcdaa78a2ebf77c",
+    "img/Screenshot tree advanced options.png": "05177cf7558f2cc4c0b26fcaf1d3c5a47c2cce79324c945f043f8a4841e4cec1",
+    "img/Screenshot tree item count.png": "0a2d7a22f342680465029b94558c10f2eaa295f451d590c884f683e2a5e948f5",
+    "img/Screenshot tree.png": "3ba23641faeaaa542a39f8da92cd35ebaf2a743794820096c11c1dd85f978d30",
+    "img/hierarchical-tree-data-example.PNG": "90dc2a6265a57d627abb54de0eba2c72aae377d48360ec68cd4a24e0e72f893d",
+    "img/equans-grafana-tree-plugin-options-demo.gif": "cb65b6f7e06910da544e41216f416f25a73e07082955b8765f029265d28afdbf",
+    "img/tree-usage-demo.gif": "633c882f82ad09f92591a1fa696f4d56f50c2f9ca1080d9fcd22cbfaed5f498c",
+    "module.js.map": "6c21d80065f1e9c759211bc833301fff3f869394357b8445843e656deca98492",
+    "LICENSE": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+    "module.js": "5efc3b290b372e21ab606bcc7ee628886786d046a148ff24ee93c08df27fe82a"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrkEARMKAAYFAmXfSJkAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm59ILAgkB0O0Y0SIanivEh4pDFBnr89lS2zjfpqYV5emLgD/yz+1Wzlx1
+r0VG9r6w4GnbW87Zi06LXCWugKRtSIvvKa5Ot7ECCQFG5bPwY5opjavs8Khs
+c+Aymb5lvjJXfRcPtukygQw++lNzzfzXFiy4G5xeu1aq8OCqsM4mZ0B5JcMa
+M1cKAxi41w==
+=Uo5g
+-----END PGP SIGNATURE-----

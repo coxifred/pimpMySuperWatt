@@ -1,0 +1,56 @@
+{
+  "type": "panel",
+  "name": "Orchestra Cities Map",
+  "id": "orchestracities-map-panel",
+  "state": "beta",
+  "info": {
+    "description": "Orchestra Cities Map",
+    "author": {
+      "name": "Orchestra Cities",
+      "url": "https://github.com/orchestracities"
+    },
+    "keywords": [
+      "map",
+      "geojson",
+      "icons"
+    ],
+    "logos": {
+      "small": "img/icn-map-panel.svg",
+      "large": "img/icn-map-panel.svg"
+    },
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/orchestracities/grafana-map-plugin/"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/orchestracities/grafana-map-plugin/blob/master/LICENSE"
+      }
+    ],
+    "screenshots": [
+      {
+        "name": "Example",
+        "path": "img/example.png"
+      },
+      {
+        "name": "IDW Interpolation",
+        "path": "img/idw.png"
+      },
+      {
+        "name": "Configuration Options",
+        "path": "img/options.png"
+      },
+      {
+        "name": "Popup example",
+        "path": "img/popup.png"
+      }
+    ],
+    "version": "1.4.4",
+    "updated": "2022-08-12"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=8.2.0",
+    "plugins": []
+  }
+}

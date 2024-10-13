@@ -1,0 +1,57 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "briangann",
+  "signedByOrgName": "Brian Gann",
+  "plugin": "briangann-gauge-panel",
+  "version": "2.0.1",
+  "time": 1699971603210,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "plugin.json": "babce13a08ace70c1ee07ac2b9531b8cce0e4a4c331c3e3103239a89fbbeacf4",
+    "LICENSE": "3b1816ccd10b7c8b8d3f98bdef8898ba9534eb158e4aef3fe3be8c06ba33246f",
+    "module.js.map": "984b56a2819c9716ef6dfd4dbad3cde338abac504bd03d6f8bf47063da23a172",
+    "module.js": "94bda1e898560ec76770e45b51aa06aedb38e85a38cbbaf91cb273aa3ac45f48",
+    "README.md": "911c45dc6ed1ece2cd8f99ad14c96b45c305f1460fc42d2c7c83f32f7a345b1e",
+    "img/Logo_D3.svg": "dd311b3974f94853fe908e1f9ec503d82182828bc5bccbfbaafbe71f76000abf",
+    "img/logo-credit.html": "44ea34b46fc8538cec8193f3dbd1b9fa56f297b10d53f8c9176dfd73308fe920",
+    "CHANGELOG.md": "84b089c003f757665f44be299a4c5c56c5d7fcb8bc4b1693b4efcff3525f2a4a",
+    "screenshots/react-config-font-settings.png": "7c07a26bf555ae13e38de496e568a962aaae2a1955e635066ff7406c8e8ad415",
+    "screenshots/alt-gauge.png": "ca015be05bf674771ea8e70880306bdca0aaf5e7c819db76ac6a9443114644d6",
+    "screenshots/react-config-needle-start-marker.png": "c6fadf0177924878adec4a471ebf962570588ea9c50bfcf6c9a27675ac7ceb19",
+    "screenshots/react-config-value-mappings.png": "eb16dd5abf6d603862bd3b36489cc08d56036e19a799682e182612846c8b3909",
+    "screenshots/react-gauge-threshold-settings-middle-upper.png": "9b2ecf41d3e944e0f90911c766e4711b49cfe14dc00804bbd830a7ce3c584417",
+    "screenshots/react-config-tickmaps.png": "2c194efd8e2e3ae9d8399d5cc7a6424fe9331872914561e91cb2a0c91f8703de",
+    "screenshots/react-config-gauge-degrees.png": "2b80a3bc5626d1a06b3c5aeba190be03591ca5776bbf7397a96e8af3decb4fb9",
+    "screenshots/react-gauge-threshold-on-value.png": "9a1419e3299233b66b68af56a2de9a05f4b33c0af66b53a34920ac63b155bb88",
+    "screenshots/react-config-needle-cross-enabled.png": "0071e1bec2e51359eb3c00cf45c3b8ed03a76f2b278bcf84c224bc30e49e1faa",
+    "screenshots/react-gauge-threshold-middle-upper.png": "87cf367cefd9644e7ce9bf95fc20f04ac9eeab74ab43eb70cfc3a7b7eadbbb25",
+    "screenshots/react-config-standard-options.png": "6fae1927439bef2c0e1e4459c640e80e1fee58016d172cf1cd26726d2974bde7",
+    "screenshots/react-config-gauge-readings.png": "229ccd83f80aab6a9bff5c0a69bb599f222af10141f69a342fc7ec2ce3c7d225",
+    "screenshots/react-config-thresholds.png": "8718c38ff9716bb8dacf22fb495b44f89f336b71da7b7cea92dd77526d4ed0ae",
+    "screenshots/alt-gauge-limits.png": "c470d5e130cc9976e9f9a94fe808f5c52fb57b6b2a7374e1678b183562e464b3",
+    "screenshots/react-gauge-default-settings.png": "8cb23065f96be500e790bf448b67da043e0b56a7dc146a7e36f6ecf4d48e86de",
+    "screenshots/react-config-limits.png": "b35b5a9289550ade6fa6e4bcb5d7ce13047c5f893221c737cda832c03f0f0185",
+    "screenshots/react-radial-customization.png": "825c3f024a9edcc9bf6261874c321532fd2f40e4996c6b29fc4fc941c76d720d",
+    "screenshots/react-gauge-threshold-on-face.png": "106080988d3fd5281be640e22311b2cec74df3a3b16818ed2eefebcbf055eecb",
+    "screenshots/react-threshold-all.png": "96403cca8bacffdef4fedbd63f225634154fd944d96832ac743bc419c4a7bdbd",
+    "screenshots/react-config-needle-end-marker.png": "eaa5d602ba6a6417e763cc3f7789d1a9af299303920f39672e06d9419b3fb0f3",
+    "screenshots/react-config-coloring.png": "3e50a70631d273dbb7ead81ab1f2208dd0100f0e6810f7e4bf24599f2d127ef7",
+    "screenshots/react-config-needle-options.png": "1962c4d819a73bd08f76dac3c8fbb911251cbb55ac483470c2f31df083a4f7b5"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrgEARMKAAYFAmVTghMAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5755AgkBJnTB1xKLGfi9DkPCJ5Yj5L+ETmaCXm0p60MpTYbSHASRpi7X
+XjtLrisj0n3ZeCbBxpCsS77QVuOriWYpu9xRcKkCBR6MRCNlmVhlwpNEGXBa
+YQYnaYfSPLMofaI9fG2yCdsdsZ+rvKHAFidVFQvnUlMf/Hscie9SXi0VBZwp
+Rr/ICWsC
+=ozwP
+-----END PGP SIGNATURE-----

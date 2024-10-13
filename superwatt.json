@@ -1,0 +1,26 @@
+{
+        "instance"              : "ApertMax 7.2K",
+        "debug"                 : false,
+        "debugClass"            : [],
+        "communicationClass"    : "usbConnector",
+        "portPath"              : "/dev/ttyUSB0",
+        "webserver"             : true,
+        "webserverDebug"        : false,
+        "webClass"              : "site",
+        "httpBind"              : "0.0.0.0",
+        "httpPort"              : 61000,
+        "gridWattUrl"           : "http://192.168.2.104/emeter/1",
+        "gridWattField"         : "power",
+        "mqttServers"           : [],
+        "influxDbUrls"          : [
+                                   {
+                                    "username"  : "pimpmysuperwatt",
+                                    "password"  : "pimpmysuperwatt",
+                                    "dbName"    : "pimpMySuperWatt",
+                                    "dbHost"    : "localhost",
+                                    "dbPort"    : "8086"
+                                   }
+                                  ],
+        "queryPoolingInterval"  : 20,
+        "queryPluginInterval"  : 30
+}

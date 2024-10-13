@@ -1,0 +1,36 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "community",
+  "signedByOrg": "marcusolsson",
+  "signedByOrgName": "Marcus Olsson",
+  "plugin": "marcusolsson-dynamictext-panel",
+  "version": "4.3.0",
+  "time": 1703523759103,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "CHANGELOG.md": "8214efb34632c4c8576f883f66ffc67d1ff6d604f8796fc8c59317d5cd340b60",
+    "img/screenshot.png": "68d355ffafe66ce4855566ccd7bf393e4c0dad66bddb3a2d2adb5e3eb057f50c",
+    "img/logo.svg": "655cfc72eec8d19bda8f74d9fa3449b7b133b5ee66c7bd3db407fdfeada1cbd1",
+    "module.js.LICENSE.txt": "8cc88f437bf1bd9dbcea39874b2925a8f8f553f3e16a702f562b2cc7998e362e",
+    "plugin.json": "56baa6947871a13786289a9dbd83f9cf27dee38f2938339b0f88e10fcd767a26",
+    "module.js.map": "308b0f38c77c52fc7c775b202be27f3fc4bf38b120dac7ef092dfeedd3f79670",
+    "LICENSE": "d92d4f253fa8d798aed23b851736cc93fb460725aa172c5df85f603acd658703",
+    "module.js": "b48cf2ad11291cc32439305a5d9c6f532e53b2f7ff68a495f333ad6e4d5b65c1",
+    "README.md": "d5d81053c6af395424fa150bf773ccb504091033811e7f9f2c82836185ed1759"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.10
+Comment: https://openpgpjs.org
+
+wrgEARMKAAYFAmWJta8AIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5zZGAgkBHNERJ0MsWynQmfASqT6VM4qzG8LotwdVwCpvI1jt+OVai66y
+Lkld+rVROBRefOnKJv4d/jeU6SJbcggeNwwRiDgCBA59q3Jh0ai56p+v915p
+0XPNUbWToN1eZAJh0xlTZNdwx1FM3hInJzguNzfxiKL3N49I0/HZL2x0laA3
+gXcfAWtC
+=13ek
+-----END PGP SIGNATURE-----

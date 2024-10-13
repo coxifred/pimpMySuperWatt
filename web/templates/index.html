@@ -1,0 +1,924 @@
+<html>
+<head>
+
+<script type="text/javascript" src="/static/javascript/utils.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/superwatt.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/semantic.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.css" />
+
+
+<script>
+	$(document).ready(function() {
+
+           $.toast = $.fn.toast
+           blinkColor=0;
+           ready=false;
+           apply=true;
+           acquireLogs=false;
+           commandsMap=new Map();
+           loadAvailableCommands();
+           currentCommand="";
+
+           var lastQuery={
+                          "communicationStatus" : "CONNECTING",
+                          "currentTry": 0,
+                          "maxTry": 40
+                         };
+
+           $('#waiting').progress({ 
+                                       text: {
+                                               active  : 'Try {value} of {total} tries',
+                                               success : '{total} tries reached' 
+                                             }
+                                     });
+           checkAvail();
+           setInterval(checkAvail, 5000);
+           setInterval(loadQuery, 10000);
+           setInterval(blink, 1000);
+
+
+
+           function blink()
+           {
+               if ( blinkColor == 0 )
+               {
+                  blinkColor=1;
+                  $("body").find(".blinked").css("color","white");
+               } else
+               {
+                  blinkColor=0;
+                  $("body").find(".blinked").css("color","black");
+               }
+           }
+
+           function sendCommand(command,parameter,button)
+           {
+            $("#resultCommand").html("");
+            $("#resultCommand").hide();
+            request="/cmd/" + command;
+            if ( typeof command == "undefined" )
+             {
+               console.log("command attribute is undefined, can't run command");
+               return;
+             }
+             if ( typeof parameter != "undefined" && parameter != "" )
+             {
+               request=request + "/" + parameter
+             }
+             button_html=button.html();
+             button.html('<i class="sync loading icon" style="visibility: visible;"></i> Please wait...');
+             getValueFromUrl(request,true,function(json){
+                try {
+                     query=JSON.parse(json);
+                     loadQuery();
+                     button.html(button_html);
+                     $('body').toast({
+                                       class: 'success',
+                                       message: 'Command ' + request + ' successfully sent',
+                                       showProgress: 'bottom',
+                                       classProgress: 'yellow'
+                                     });    
+                     $("#resultCommand").html(JSON.stringify(query,null," "));
+                     $("#resultCommand").show();
+                    }
+                catch (e)
+                    {
+                     button.html(button_html);
+                     $('body').toast({
+                                       class: 'error',
+                                       title: 'Command error',
+                                       message: 'Cant send command ' + request + ' error was ' + e,
+                                       showProgress: 'bottom', 
+                                       classProgress: 'red'
+                                      });     
+                    }
+               });
+
+
+           }
+
+           $("body").delegate(".commandable","click", function() {
+               button=$(this);
+               button_html=$(this).html();
+               command=$(this).attr("command");
+               parameter=$(this).attr("parameter");
+               sendCommand(command,parameter,button); 
+
+
+           });
+
+
+           $("#sendButton").on("click",function() {
+              $("#resultCommand").html("");
+              button=$(this);
+              command=$("#commandName").val();
+              parameter=$("#parameterValue").val(); 
+              sendCommand(command,parameter,button); 
+           });
+        
+            
+
+           $("body").delegate(".commandItem", "click", function() {
+                commandName=$(this).attr('name');
+                currentCommand=commandsMap.get(commandName);
+                $("#commandName").val(commandName);
+                $("#parameterValue").val("");
+                $("#parameterInput").hide();
+                $("#commandInput").show();
+                $("#sendButton").show();
+                $("#commandHelperMessage").hide();
+                $("#parameterHelperMessage").hide();
+                console.log(currentCommand);
+                if ( currentCommand.parameterMandatory )
+                   {
+                    console.log("Display");
+                    $("#parameterValue").val("");
+                    $("#parameterInput").show();
+                    $("#parameterValue").attr("placeholder",currentCommand.parameterFormat[0]);
+                   }
+                commandHelper();
+           });
+
+           function commandHelper()
+           {
+            $("#commandHelperContent").html('<br>');
+            $("#commandHelperContent").append('Help:');
+            for (h=0;h<currentCommand.help.length;h++)
+                {
+                  $("#commandHelperContent").append('<li> ' + currentCommand.help[h]);
+                }
+            $("#commandHelperContent").append('<hr>');
+            $("#commandHelperContent").append('Examples:');
+            for (e=0;e<currentCommand.examples.length;e++)
+                {
+                  $("#commandHelperContent").append('<li><a target=new href="/' + currentCommand.examples[e] +'">' + currentCommand.examples[e] + '</a>');
+                }
+
+            $("#commandHelperMessage").show();
+            $("#parameterHelperMessage").hide();
+             
+          }  
+
+           $("body").delegate(".parameterHelper", "click", function() {
+            $("#parameterHelperContent").html('<br>');
+            $("#parameterHelperContent").append('Formats:');
+            for (f=0;f<currentCommand.parameterFormat.length;f++)
+                {
+                  $("#parameterHelperContent").append('<li> ' + currentCommand.parameterFormat[f]);
+                }
+            $("#parameterHelperContent").append('<hr>');
+            $("#parameterHelperContent").append('Help:');
+            for (h=0;h<currentCommand.help.length;h++)
+                {
+                  $("#parameterHelperContent").append('<li> ' + currentCommand.help[h]);
+                }
+            $("#parameterHelperMessage").show();
+            $("#commandHelperMessage").hide();
+           });
+
+           function loadAvailableCommands()
+           {
+             commandsMap=new Map();
+             
+             $("#QueriesMenu").html("");
+             $("#InverterMenu").html("");
+             getValueFromUrl("/cmdAvail",true,function(json){
+                try {
+                     commands=JSON.parse(json);    
+                     console.log(commands);
+                     commandsMap=new Map();
+                     for (i=0;i<commands.length;i++)
+                     {
+                       aCommand=commands[i];
+                       commandsMap.set(aCommand.command,aCommand);
+                       if ( aCommand.internalCommand )
+                        {
+
+                        } else if ( aCommand.pureQuery )
+                        {
+                          $("#QueriesMenu").append('<div name="' + aCommand.command  + '" class="item commandItem">' + aCommand.command  + ' (' + aCommand.help[0] + ')</div>');
+                        } else if ( ! aCommand.pureQuery )
+                        {    
+                          $("#InverterMenu").append('<div name="' + aCommand.command  + '" class="item commandItem">' + aCommand.command  + ' (' + aCommand.help[0] + ')</div>');
+                        }
+
+                     }
+
+                     $(".dropdown").dropdown();
+                    } catch(e)
+                    {
+                     console.log("Can't access to availables commands");
+                    }
+
+             });
+
+
+           }
+ 
+           function fillGrid(query)
+           {
+              $("#grid").html('<br>');
+              $("#grid").append(query.qpigs_grid_volt + "v @ " + query.qpigs_grid_freq + "hz") ;
+              $("#grid").append('<br>');
+              if ( typeof query.GRIDWATTS.gridwatts != "undefined" )
+              {
+                $("#grid").append(query.GRIDWATTS.gridwatts + ' watts') ;
+              }
+              
+           }
+
+           function fillPv1(query)
+           {
+              $("#pv1").html('');
+              $("#pv1").append('<font style="font-size:3.2em;">' + query.qpigs_pv_watts + "w");
+              $("#pv1").append('<br>');
+              $("#pv1").append(query.qpigs_pv_volts + "v");
+              $("#pv1").append(' @ ' + query.qpigs_pv_amps + " amps");
+           }
+
+           function fillPv2(query)
+           {
+              $("#pv2").html('');
+              $("#pv2").append('<font style="font-size:3.2em;">' + query.qpigs2_pv2_watts + "w");
+              $("#pv2").append('<br>');
+              $("#pv2").append(query.qpigs2_pv2_volts + "v");
+              $("#pv2").append(' @ ' + query.qpigs2_pv2_amps + " amps");
+           }
+
+           function fillInverter(query)
+           {
+            
+              $("#inverterName").html(query.qmn);
+              $("#inverterVersion").html("CORE:" + parseFloat(query.qfw.split(":")[1]));
+              $("#inverterDisplayVersion").html("DISP:" + parseFloat(query.qfw3.split(":")[1]));
+              $("#inverter").html('');
+              $("#inverter").append('<i class="cog icon"></i>' + query.qpigs_load_percent + "%");
+              $("#inverter").append('<i class="thermometer half icon"></i>' + query.qpigs_temp + "°C");
+
+              $("#inverter").append('<br>');
+           }
+
+           function fillBattery(query)
+           {
+              $("#battery").html('');
+              if ( parseInt(query.qpigs_batt_capacity) <= 25 ) $("#batteryLevel").html('<i class="huge red battery quarter icon">'); 
+              if ( parseInt(query.qpigs_batt_capacity) > 25 && parseInt(query.qpigs_batt_capacity) <= 50 ) $("#batteryLevel").html('<i class="huge orange battery half icon">');
+              if ( parseInt(query.qpigs_batt_capacity) > 50 && parseInt(query.qpigs_batt_capacity) <= 75 ) $("#batteryLevel").html('<i class="huge yellow battery three quarter icon">');
+              if ( parseInt(query.qpigs_batt_capacity) > 75 ) $("#batteryLevel").html('<i class="huge green battery full icon">');
+
+              $("#battery").append(query.qpigs_batt_capacity + "% @ ");
+              $("#battery").append(query.qpigs_batt_volt + "v");
+
+              if ( query.qpigs_batt_charge_amps  > 2 )
+              {
+               $("#recharge").css("transform","rotate(45deg)");
+               $("#recharge").css("left","-130px");
+               $("#recharge").show();
+              }
+               else if ( query.qpigs_batt_discharge_amps > 0 )
+               {
+                $("#recharge").css("transform","rotate(225deg)");
+                $("#recharge").css("left","-130px");
+                $("#recharge").show();
+               }
+               else
+               {
+                $("#recharge").hide();
+               }
+
+              $("#batterySlider").slider('set rangeValue',query.qpiri_batt_recharge_voltage,query.qpiri_batt_redischarge_voltage,false);
+              $("#lowVol").html(query.qpiri_batt_recharge_voltage);
+              $("#highVol").html(query.qpiri_batt_redischarge_voltage);
+
+              authBattery(query);
+           }
+
+           function authBattery(query) 
+           {
+               if ( parseFloat($("#back2grid").html()) < parseFloat(query.qpigs_batt_volt) )
+                 {
+                  $("#authBack2Grid").addClass('green').removeClass('red');
+                  $("#authBack2Grid").html('Dischargeable&nbsp;&nbsp;&nbsp;<i class="check circle outline icon"></i>');
+                 } else
+                 {
+                  $("#authBack2Grid").html('UnDischargeable&nbsp;&nbsp;&nbsp;<i class="circle outline icon"></i>');
+                  $("#authBack2Grid").addClass('red').removeClass('green');
+                 }
+
+               if ( parseFloat($("#back2battery").html()) < parseFloat(query.qpigs_batt_volt) )
+                 {                  
+                  $("#authBack2Battery").html('Rechargeable&nbsp;&nbsp;&nbsp;<i class="check circle outline icon"></i>');
+                  $("#authBack2Battery").addClass('green').removeClass('red');
+                 } else           
+                 {           
+                  $("#authBack2Battery").html('UnRechargeable&nbsp;&nbsp;&nbsp;<i class="circle outline icon"></i>');
+                  $("#authBack2Battery").addClass('red').removeClass('green');
+                 }                
+
+           }
+
+           function performMessages(json)
+           {
+            messages="";
+            for (i=0;i<json.lastMessages.length;i++)
+                {
+                 if ( json.lastMessages[i].indexOf(" ERR ") > 0 )
+                    {
+                     messages+='<br><div style=color:red;display:inline>' + json.lastMessages[i]  + '</div>';
+                    } else if ( json.lastMessages[i].indexOf(" ACK ") > 0 )
+                              {
+                               messages+='<br><div style=color:#00ffbb;display:inline>' + json.lastMessages[i] + '</div>';
+                              } else
+                              {
+                               messages+='<br>' + json.lastMessages[i];
+                              }
+               }
+            if ( acquireLogs )
+               {
+                  $('#lastMessagesModal').append(messages);
+                  let divElement = document.getElementById('logsContent');
+                  divElement.scrollTop = divElement.scrollHeight;
+               }
+           $('#lastMessages').html(messages);
+
+           }
+
+           function checkAvail()
+           {
+              getValueFromUrl("/ready",true,function(json){
+                                                           try {
+                                                                 console.log(json);
+                                                                 json=JSON.parse(json);
+                                                                 performMessages(json);
+                                                                 if ( ! json.ready  )
+                                                                  { 
+                                                                   ready=false;
+                                                                   $('#notReady').modal('setting', 'closable', false).modal('show');
+                                                                   $('#mainDisplay').css("-webkit-filter","blur(10px)");
+                                                                   $('#waiting').progress('increment');
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                   if ( ! ready )
+                                                                   {
+                                                                          $('body').toast({
+                                                                                          class: 'success',
+                                                                                          title: 'Communication message',
+                                                                                          message: 'Successfully connected',
+                                                                                          showProgress: 'bottom', 
+                                                                                          classProgress: 'yellow'
+                                                                                  });
+                                                                   }
+                                                                   ready=true;
+                                                                   loadQuery();
+                                                                   $('#mainDisplay').css("-webkit-filter","blur(0px)");
+                                                                   $('#notReady').modal('hide');
+                                                                   $('#waiting').progress({                                
+                                                                                           text: {                     
+                                                                                                   active  : 'Try {value} of {total} tries',
+                                                                                                   success : '{total} tries reached'
+                                                                                                 }                       
+                                                                                         });        
+                                                                  }
+                                                               }
+                                                               catch (e)
+                                                               {
+                                                                console.log("Comm readyness error " + e );
+                                                                ready=false;
+                                                               }
+                                                          });
+
+           }
+
+           $("#showCommands").on("click",function() {
+            $("#commandHelper").modal({
+                                       closeable : false
+                                      }).modal('show');
+
+           });
+
+           $("#showLogs").on("click",function() {
+            acquireLogs=true;
+            $("#logs").modal({
+                                       closeable : false,
+                                       onHide : function(e) {
+                                                                acquireLogs=false;
+                                                                $('#lastMessagesModal').html("");
+                                                            },
+                                      }).modal('show');
+          
+           });
+
+
+           $('#confirmVoltage').on("click",function() {
+             button=$(this);
+             button.addClass("loading");
+             request1="/cmd/PBDV/" + $("#highVol").html();
+                                                  getValueFromUrl(request1,true,function(json){
+                                                                                              try {
+                                                                                                   request2="/cmd/PBCV/" + $("#lowVol").html();
+                                                                                                   getValueFromUrl(request2,true,function(json){
+                                                                                                       try {
+                                                                                                            apply=true;
+                                                                                                            button.removeClass("loading");
+                                                                                                            $("#applyVoltage").hide();
+                                                                                                           }
+                                                                                                           catch (e)
+                                                                                                           {
+                                                                                                            button.removeClass("loading");
+                                                                                                           }
+                                                                                                   });
+                                                                                                  }
+                                                                                              catch (e)
+                                                                                                  {
+                                                                                                   button.removeClass("loading");
+                                                                                                  }
+                                                                                             });
+
+           });
+
+           
+
+
+           $('#batterySlider').slider(
+             {
+                 min: 46.0,
+                 minRange: 0.5,
+                 max: 53.2,
+                 step: 0.1,
+                 showThumbTooltip: true,
+                 tooltipConfig: {
+                                 position: 'bottom center',
+                                 variation: 'small visible green'
+                                },
+                 onChange: function(e,a,b) {
+                                        apply=false;
+                                        $("#applyVoltage").show();
+                                        $("#lowVol").html(a);
+                                        $("#highVol").html(b);
+				       }
+             }
+           );
+
+
+           function fillHome(query)
+           {
+              $("#home").html('');
+              $("#home").append('<font style="font-size:3.2em;">' + query.qpigs_ac_watt + "w");
+              $("#home").append('<br>');
+           }
+
+           function fillSuperwatt(query)
+           {
+              $("#superwatt").html('');
+              $("#superwatt").append(query.communicationStatus.toLowerCase());
+              $("#supperwatt").append('<br>');
+           }
+
+           function fillOutputSource(query)
+           {
+              $("body").find(".sourcePriority").hide();
+              $("#output_source" + query.qpiri_output_source_priority_raw).show();
+           }
+
+           function fillChargeSource(query)
+           {
+              $("body").find(".chargePriority").hide();
+              $("#charge_source" + query.qpiri_charger_source_priority_raw).show();
+           }
+
+           function fillAlert(query)
+           {
+            // Pv
+            setClass(query.qpiws_busUnder,"qpiws_busUnder");
+            setClass(query.qpiws_busOver,"qpiws_busOver");
+            setClass(query.qpiws_busSoftFail,"qpiws_busSoftFail");
+            setClass(query.qpiws_opvShort,"qpiws_opvShort");
+            setClass(query.qpiws_pvLoss,"qpiws_pvLoss");
+
+            // Battery
+
+            setClass(query.qpiws_batteryDerating,"qpiws_batteryDerating");
+            setClass(query.qpiws_batteryEqualization,"qpiws_batteryEqualization");
+            setClass(query.qpiws_batteryLowAlarm,"qpiws_batteryLowAlarm");
+            setClass(query.qpiws_batOpen,"qpiws_batOpen");
+            setClass(query.qpiws_batteryUnderShutdown,"qpiws_batteryUnderShutdown");
+            setClass(query.qpiws_batteryVoltageHigh,"qpiws_batteryVoltageHigh");
+            setClass(query.qpiws_batteryWeak,"qpiws_batteryWeak");
+
+            setClass(query.qpiws_lineFail,"qpiws_lineFail");
+            setClass(query.qpiws_currentSensorFail,"qpiws_currentSensorFail");
+            setClass(query.qpiws_eepromFault,"qpiws_eepromFault");
+            setClass(query.qpiws_fanLocked,"qpiws_fanLocked");
+            setClass(query.qpiws_opDcVoltageOver,"qpiws_opDcVoltageOver");
+            setClass(query.qpiws_inverterOverCurrent,"qpiws_inverterOverCurrent");
+            setClass(query.qpiws_overTemperature,"qpiws_overTemperature");
+            setClass(query.qpiws_overload,"qpiws_overload");
+            setClass(query.qpiws_selfTestFail,"qpiws_selfTestFail");
+            setClass(query.qpiws_inverterSoftFail,"qpiws_inverterSoftFail");
+            setClass(query.qpiws_inverterVoltageTooHigh,"qpiws_inverterVoltageTooHigh");
+            setClass(query.qpiws_inverterVoltageTooLow,"qpiws_inverterVoltageTooLow");
+            
+           }
+
+           function setClass(value,id)
+           {
+               $("#" + id).attr("class","");
+               if ( value == 0) 
+                {
+                 $("#" + id).addClass("big green check circle icon");
+                }else if ( value == 1) 
+                {
+                 $("#" + id).addClass("big orange exclamation triangle icon");
+                }else if ( value == 2)
+                {
+                 $("#" + id).addClass("big red exclamation circle icon");
+                } else
+                {
+                 $("#" + id).addClass("big yellow question circle icon");
+                }
+           }
+
+           
+           function loadQuery()
+           {
+            if ( ready && apply )
+             { 
+              getValueFromUrl("/inverterQuery",true,function(json){
+                try {
+                     $("#dash").html("");
+                     query=JSON.parse(json);    
+
+                     fillGrid(query);
+                     fillPv1(query);
+                     fillPv2(query);
+                     fillInverter(query);
+                     fillBattery(query);
+                     fillHome(query);
+                     fillSuperwatt(query);
+                     fillOutputSource(query);
+                     fillChargeSource(query);
+                     fillAlert(query);
+
+                     lastQuery=query;
+                     
+                     
+                    } catch(e)
+                    {
+                      console.log(e);
+                    }
+                $('body').find(".moveable").draggable();
+	      });
+             }
+           }
+
+           function addStat(value,icon,label,size)
+            {
+             console.log("value=[" + value + "]");
+             if ( lastQuery.communicationStatus != "CONNECTED" )
+             {
+              $("#dash").html('<div class="ui icon orange message"><i class="notched circle loading icon"></i><div class="content"><div class="header">Just one second</div><p>We are connecting to the Inverter... Connection status ' + lastQuery.communicationStatus + ' tries ' + lastQuery.currentTry + '/' + lastQuery.maxTry + '.</p>  </div></div>');
+             }else if ( typeof value == "undefined" || value.indexOf("NaN") >=0 || value.indexOf("undefined") >=0 || value == "undefined" || value == "NaN"  )
+             {
+              $("#dash").html('<div class="ui icon orange message"><i class="notched circle loading icon"></i><div class="content"><div class="header">Just one second</div><p>We are connecting to the Inverter... Connection status ' + lastQuery.communicationStatus + ' tries ' + lastQuery.currentTry + '/' + lastQuery.maxTry + '.</p></div></div>');
+             } else
+             {
+              $("#dash").append('<div style="position:relative" class="moveable ui ' + size + ' statistic"><div class="value"><i class="' + icon + ' icon"></i>' + value + '</div><div class="label">' + label + '</div></div>');
+             }
+            }
+
+	});	
+</script>
+
+
+
+
+</head>
+
+<body >
+        <div>
+          <img class=image src=/static/images/pimpMySuperWatt.png>
+    	  <div class="SuperWattTitle" >PimpMySuperWatt</div>
+          <div class="SuperWattProject"><a href="https://github.com/coxifred/pimpMySuperWatt" target=new class="ui label"><i class="github icon"></i>Coxifred 2020</a>
+          <a href="https://paypal.me/FredericCOSTANT/1" target=new class="ui label"><i class="paypal icon"></i>Pay me a beer</a>
+          <a href="/parameters" target=new class="ui label"><i class="cubes icon"></i>API_JSON Superwatt Parameters</a>
+          <a href="/inverterQuery" target=new class="ui label"><i class="cubes icon"></i>API_JSON Inverter Parameters</a></div>
+        </div>
+
+
+        <div id=mainDisplay style="-webkit-filter: blur(10px);">
+         <br>
+         <center>
+          <table>
+           <tr>
+             <th style="border:1px black solid" colspan=5>PV</th>
+             <th style="border:1px black solid" colspan=7>BATTERY</th>
+             <th style="border:1px black solid" colspan=12>INVERTER</th>
+           </tr>
+           <tr style=font-size:0.8em;vertical-align:top;>
+             <td><center><i id=qpiws_busUnder class="big question icon" style="visibility: visible;"></i><br><center>Bus Under</td>
+             <td><center><i id=qpiws_busOver class="big question icon" style="visibility: visible;"></i><br><center>Bus Over</td>
+             <td><center><i id=qpiws_busSoftFail class="big question icon" style="visibility: visible;"></i><br><center>Bus Soft Fail</td>
+             <td><center><i id=qpiws_opvShort class="big question icon" style="visibility: visible;"></i><br><center>Opv short</td>
+             <td><center><i id=qpiws_pvLoss class="big question icon" style="visibility: visible;"></i><br><center>Pv loss</td>
+
+             <td><center><i id=qpiws_batteryDerating class="question icon" style="visibility: visible;"></i><br><center>Derating</td>
+             <td><center><i id=qpiws_batteryEqualization class="big question icon" style="visibility: visible;"></i><br><center>Equalization</td>
+             <td><center><i id=qpiws_batteryLowAlarm class="big question icon" style="visibility: visible;"></i><br><center>Low Alarm</td>
+             <td><center><i id=qpiws_batOpen class="big question icon" style="visibility: visible;"></i><br><center>Open</td>
+             <td><center><i id=qpiws_batteryUnderShutdown class="big question icon" style="visibility: visible;"></i><br><center>Under shutdown</td>
+             <td><center><i id=qpiws_batteryVoltageHigh class="big question icon" style="visibility: visible;"></i><br><center>Voltage high</td>
+             <td><center><i id=qpiws_batteryWeak class="big question icon" style="visibility: visible;"></i><br><center>Weak</td>
+
+             <td><center><i id=qpiws_lineFail class="big question icon" style="visibility: visible;"></i><br><center>Bus Line Fail</td>
+             <td><center><i id=qpiws_currentSensorFail class="big question icon" style="visibility: visible;"></i><br><center>Current Sensor Fail</td>
+             <td><center><i id=qpiws_eepromFault class="big question icon" style="visibility: visible;"></i><br><center>Eeprom fault</td>
+             <td><center><i id=qpiws_fanLocked class="big question icon" style="visibility: visible;"></i><br><center>Fan locked</td>
+             <td><center><i id=qpiws_opDcVoltageOver class="big question icon" style="visibility: visible;"></i><br><center>OPDC voltage over</td>
+             <td><center><i id=qpiws_inverterOverCurrent class="big question icon" style="visibility: visible;"></i><br><center>Over current</td>
+             <td><center><i id=qpiws_overTemperature class="big question icon" style="visibility: visible;"></i><br><center>Over temperature</td>
+             <td><center><i id=qpiws_overload class="big question icon" style="visibility: visible;"></i><br><center>Overload</td>
+             <td><center><i id=qpiws_selfTestFail class="big question icon" style="visibility: visible;"></i><br><center>Self test Fail</td>
+             <td><center><i id=qpiws_inverterSoftFail class="big question icon" style="visibility: visible;"></i><br><center>Soft Fail</td>
+             <td><center><i id=qpiws_inverterVoltageTooHigh class="big question icon" style="visibility: visible;"></i><br><center>Voltage too high</td>
+             <td><center><i id=qpiws_inverterVoltageTooLow class="big question icon" style="visibility: visible;"></i><br><center>Voltage too low</td>
+
+           </tr>
+          </table>
+         </center>
+          <br>
+            <table style=zoom:1.5;width:105%>
+              <tr>
+                 <td></td>
+                 <td></td>
+                 <td>  
+                          <div class="card">
+                            <div class="content">
+                              <center><i class="huge industry icon"></i>
+                              <div class="header">GRID</div>
+                              <div id=grid class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+                 <td></td>
+                 <td></td>
+              </tr>
+              <tr>
+                 <td></td>
+                 <td></td>
+                 <td><center><div style="transform:rotate(90deg);font-size:3.5em">&#10141;</div></td>
+                 <td></td>
+                 <td></td>
+              </tr>
+              <tr>
+                 <td>
+                          <div class="card">
+                            <div class="content">
+                              <center><i class="huge yellow solar panel icon"></i>
+                              <div class="header">PV1</div>
+                              <div id=pv1 class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+                 <td>
+                    <div style="font-size:3.5em">&#10141;</div>
+                 </td>
+                 <td>  
+                          <div class="card">
+                            <div class="content">
+                              <center>
+                              <i class="massive orange tablet icon">
+                                         <a id=inverterVersion style=font-family:console;position:relative;left:-22px;top:-140px;width:110px class="ui teal ribbon label">_____</a>
+                                         <a id=inverterDisplayVersion style=font-family:console;position:relative;left:-22px;width:110px;top:-130px class="ui blue ribbon label">_____</a>
+                              </i>
+                              <div id=inverterName class="header">INVERTER</div>
+                              <div id=inverter class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+                 <td>
+                    <div style="transform:rotate(180deg);font-size:3.5em">&#10141;</div>
+                 </td>
+                 <td>
+                          <div class="card">
+                            <div class="content">
+                              <center><i class="huge yellow solar panel icon"></i>
+                              <div class="header">PV2</div>
+                              <div id=pv2 class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+              </tr>
+              <tr> 
+                 <td> 
+                          <div class="card">
+                            <div class="content">
+                              <center><i class="huge wifi icon"></i>
+                              <div class="header">PimpMySuperWatt</div>
+                              <div id=superwatt class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+                 <td></td>
+                 <td>
+                          <div class="card">
+                            <div class="content">
+                              <center>
+                              <div style="transform:rotate(90deg);font-size:3.5em">&#10141;</div>
+                              <i style="" class="huge home icon"></i>
+                              <div class="header">HOME</div>
+                              <div id=home class="description">
+                              </div>
+                            </div>
+                          </div>
+                 </td>
+                 <td></td>
+                 <td>
+                          <div class="card">
+                            <div class="content">
+                              <center>
+                              <div id=batteryLevel><i class="huge battery quarter icon"></i></div>
+                              <div class="header">BATTERY</div>
+                              <div id=battery class="description">
+                              </div>
+                              <div id=recharge style="position:relative;top:-130px;left:-115px;transform:rotate(45deg);font-size:3.5em;color:white" class="blinked" >&#10141;</div>
+                            </div>
+                          </div>
+                 </td>
+                 <td></td>
+              </tr>
+             </table>
+                             <center>
+                          <table >
+                             <tr>
+                                 <td width=350px ><center>Output Source priority<br><i class="big angle down icon"></i><br>
+                                                                    <div style=position:relative;left:-137px;top:3px;height:20px><a id=output_source2 class="ui red ribbon label sourcePriority">Selected</a></div>
+                                                                    <div command="POP" parameter="02" class="big ui yellow label commandable" style=width:380px;height:42px >
+                                                                                                    <i class="sun icon"></i>
+                                                                                                    <i class="car battery full icon"></i>
+                                                                                                    <i class="industry icon"></i>
+                                                                                                    Solar Battery Utility (SBU)
+                                                                    </div><br><br>
+
+                                                                    <div style=position:relative;left:-137px;top:3px;height:20px><a id=output_source0 class="ui red ribbon label sourcePriority" >Selected</a></div>
+                                                                    <div command="POP" parameter="00" class="big ui blue label commandable" style=width:380px;height:42px >
+                                                                                                    <i class="industry icon"></i>
+                                                                                                    <i class="sun icon"></i>
+                                                                                                    <i class="car battery icon"></i>
+                                                                                                    Utility Solar Battery (USB)
+                                                                    </div><br><br>
+
+                                                                    <div style=position:relative;left:-137px;top:3px;height:20px><a id=output_source1 class="ui red ribbon label sourcePriority" >Selected</a></div>
+                                                                    <div command="POP" parameter="01" class="big ui teal label commandable" style=width:380px;height:42px>
+                                                                                                    <i class="sun icon"></i>
+                                                                                                    <i class="industry icon"></i>
+                                                                                                    <i class="car battery icon"></i>
+                                                                                                    Solar Utility Battery (SUB)
+                                                                    </div>
+                                 </td>
+                                 <td width=350px ><center>Battery Charge priority<br><i class="big angle down icon"></i><br>
+                                                                    <div style=position:relative;left:-173px;top:3px;height:20px><a id=charge_source1 class="ui red right ribbon label chargePriority">Selected</a></div>
+                                                                    <div command="PCP" parameter="01" class="big ui yellow label commandable" style=width:380px;height:42px>
+                                                                                                    <i class="sun icon"></i>then&nbsp;&nbsp;
+                                                                                                    <i class="industry icon"></i>
+                                                                                                    Solar First (SF) then Utility
+                                                                    </div><br><br>
+
+                                                                    <div style=position:relative;left:-173px;top:3px;height:20px><a id=charge_source2 class="ui red right ribbon label chargePriority">Selected</a></div>
+                                                                    <div command="PCP" parameter="02" class="big ui blue label commandable" style=width:380px;height:42px >
+                                                                                                    <i class="sun icon"></i>+&nbsp;&nbsp;
+                                                                                                    <i class="industry icon"></i>
+                                                                                                    Solar & Utility (SU)
+                                                                    </div><br><br>
+                                                                    <div style=position:relative;left:-173px;top:3px;height:20px><a id=charge_source3 class="ui red right ribbon label chargePriority">Selected</a></div>
+                                                                    <div command="PCP" parameter="03" class="big ui teal label commandable"  style=width:380px;height:42px>
+                                                                                                    <i class="sun icon"></i>
+                                                                                                    Solar Only (SO)
+                                                                    </div>
+                                 </td>
+                             </tr>
+                             <tr>
+                                  <td></td>
+                                  <td></td>
+                             </tr>
+                                  <td></td>
+                                  <td> 
+                                    <center>
+                                    <br>
+                                    ADR(Authorized Discharge Range) in volts:<br><br> 
+                                    <div id=batterySlider class="ui range ticked labeled slider"></div>
+                                    </center>
+                                    <br><br>
+                                    <div style=display:inline;font-size:0.8em><i class="info circle icon"></i> In SBU mode, Battery provide power until <div style=display:inline id=lowVol></div>v is reached</div><br>
+                                    <div style=display:inline;font-size:0.8em><i class="info circle icon"></i> Battery will reenter in discharge mode when <div style=display:inline id=highVol></div>v is reached</div>
+                                    <br><br>
+                                    <center>
+                                    <div id=applyVoltage class="ui buttons" style=display:none;width:100%>
+                                          <button class="ui button">Cancel</button>
+                                          <div class="or"></div>
+                                          <button id=confirmVoltage class="ui positive button">Apply</button>
+                                    </div>
+                                    </center>
+                                  </td>
+                             </tr>
+                          </table>
+               </center>
+          <br>
+          <div id=dash class="dash"></div>
+          <br>
+        
+
+       <div id=logs class="basic ui fullscreen modal" style=width:100%>
+        <center><div class="header"><i class="massive file alternate outline icon"></i></div></center>
+         <div class="content" id=logsContent style=font-size:2.0em;color:white;overflow-y:scroll;height:500px>
+           <pre id=lastMessagesModal style=font-size:0.4em;width:80%></pre>
+         </div>
+         <div class="actions">
+           <div class="ui blue approve button">Close logs</div>
+         </div>
+       </div>
+ 
+
+
+       <div id=commandHelper class="basic ui fullscreen modal" style=width:100%>
+        <center><div class="header"><i class="massive green terminal icon"></i></div></center>
+         <div class="content" style=font-size:2.0em;color:white>
+          <table id=commandHelper style=width:100% >
+          <tr><td style=width:33%>
+              <div id=commands style=position:relative>
+                                                        <div class="ui vertical right  menu" style=width:100%>
+                                                                                                             <div class="ui scrolling dropdown link item">
+                                                                                                                <i class="dropdown icon"></i>Inverter Queries
+                                                                                                                <div id=QueriesMenu class="right menu"></div>
+                                                                                                             </div>
+                                                                                                             <div class="ui scrolling dropdown link item">
+                                                                                                                <i class="dropdown icon"></i>Inverter Settings
+                                                                                                                <div id=InverterMenu class="right menu"></div>
+                                                                                                             </div>
+                                                        </div>
+             <div>
+          </td>
+          <td style=width:33%>
+              <div style=width:100%;position:relative;top:-8px>
+                <div id=commandInput class="ui action input commandHelper" style=width:100%;display:none><button class="ui teal labeled icon button"><i class="question circle outline icon"></i>Command</button><input id=commandName type="text" value=""></div>
+                <div id=parameterInput class="ui action input parameterHelper" style=width:100%;display:none;position:relative;left:150px;top:1px><input style=position:relative;left:-8px id=parameterValue type="text"><button class="ui orange right labeled icon button"><i class="question circle outline icon"></i>Parameter</button></div>
+                
+                <button id=sendButton class="ui green right labeled icon button" style="width:100%;display:none;" ><i class="paper plane outline icon"></i>Send</button>
+                <pre id=resultCommand style=color:#00f6ff;display:none>
+                </pre>
+              </div>
+          </td>
+          <td style=width:33%>
+              <div id=parameterHelperMessage style=display:none class="ui green icon message">
+                   <i class="question circle outline icon"></i>
+                   <div class="content">
+                             <div class="header">ParameterHelper</div>
+                             <div id=parameterHelperContent></div>
+                   </div>
+              </div>
+
+              <div id=commandHelperMessage style=display:none class="ui green icon message">
+                   <i class="question circle outline icon"></i>
+                   <div class="content">
+                      <div class="header">CommandHelper</div>
+                      <div id=commandHelperContent></div>
+                   </div>
+             </div>
+          </td></tr>
+         </table>
+         </div>
+          <div class="actions">
+           <div class="ui blue approve button">Close command box</div>
+          </div>
+       </div>
+
+       <div id=notReady class="basic ui modal">
+        <center><div class="header"><i class="massive yellow exclamation circle icon"></i></div></center>
+         <div class="content" style=font-size:2.0em;color:white>
+          <p><center>Waiting for readyness...</center><br>
+          <div class="ui inverted indicating progress" data-value="1" data-total="40" id="waiting">
+            <div class="bar"></div>
+            <div class="label" style=wolor:white></div>
+          </div>
+          <br>
+          <pre id=lastMessages style=font-size:0.4em;width:80%>
+          </pre>
+          </p>
+         </div>
+       </div>
+</div>
+  
+
+
+<div class="ui massive green three item inverted menu" style=position:fixed;width:100%;bottom:-15px;font-size:2em>
+  <a class="item" id=showCommands >Commands</a>
+  <a class="item" id=showLogs >Logs</a>
+  <a class="item">Events history</a>
+</div>
+</body>
+</html>

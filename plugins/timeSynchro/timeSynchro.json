@@ -1,0 +1,4 @@
+{
+        "maxDriftMinutes"       : 5,
+        "enable"                : true
+}

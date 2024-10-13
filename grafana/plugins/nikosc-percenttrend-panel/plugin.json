@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "Percentage Trend",
+  "id": "nikosc-percenttrend-panel",
+  "info": {
+    "description": "Percent change with trend display",
+    "author": {
+      "name": "Niko Schmuck",
+      "url": "https://nava.de"
+    },
+    "keywords": ["comparison", "percent", "stat", "stats", "trend", "trends"],
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/nikos/grafana-percent-trend-panel"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/nikos/grafana-percent-trend-panel/blob/main/LICENSE"
+      }
+    ],
+    "screenshots": [
+      {
+        "name": "Demo",
+        "path": "img/screenshots/panel-demo.png"
+      },
+      {
+        "name": "Options",
+        "path": "img/screenshots/panel-options.png"
+      }
+    ],
+    "version": "1.0.8",
+    "updated": "2024-01-23"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=8.1.0",
+    "plugins": []
+  }
+}
