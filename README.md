@@ -34,11 +34,15 @@ This inverter contains 1 port for computer communication (RJ45 look).
 
 <img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true">
 
-<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/commands.png?raw=true">
+<img src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/commands.jpg?raw=true">
 
 ## Embedded `Grafana` dashboard
 
-<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana.png?raw=true">
+<img  src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana.jpg?raw=true">
+
+<img  src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana2.jpg?raw=true">
+
+<img  src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana3.jpg?raw=true">
 
 # `Docker` installation AMD64
 
