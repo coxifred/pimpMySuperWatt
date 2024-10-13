@@ -11,11 +11,11 @@ This software will drive your inverter, expose & stores metrics (including Pylon
 
 Version 1.0 still available [here](https://github.com/coxifred/pimpMySuperWatt/tree/1.0)
 
-*The Axpert max 7.2kw looks like this:*
+*The Axpert max 7.2 looks like this:*
 
-![Axpert-max7.2](https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/axpertMax7-2.png?raw=true)
+<img height=300px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/axpertMax7-2.png?raw=true" > 
 
-This inverter contains 1 for communication (RJ45 look).
+This inverter contains 1 port for computer communication (RJ45 look).
 
 # What do you need ?
 
@@ -34,9 +34,11 @@ This inverter contains 1 for communication (RJ45 look).
 
 <img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true">
 
+<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/commands.png?raw=true">
+
 ## Embedded `Grafana` dashboard
 
-
+<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/grafana.png?raw=true">
 
 # `Docker` installation AMD64
 
@@ -70,24 +72,26 @@ venv/bin/pip3 install -r requirements.txt
 
 ```json
 {
-        "instance"              : "AxpertMax 7.2K",      <-  Free label
-        "debug"                 : true,                  <- debug mode
-        "debugClass"            : [],                    <- you can specify custom classes for debug, ie: ["CORE.queryExternalPower","CORE.sendToInflux"]
-        "communicationClass"    : "usbConnector",        <- Class connector (usbConnector for the moment)
-        "portPath"              : "/dev/ttyUSB0",        <- the port Path
-        "webserver"             : true,                  <- If you want a web interface
-        "webserverDebug"        : false,                 <- debug web 
-        "webClass"              : "site",                <- Class for app web.
-        "httpBind"              : "0.0.0.0",             <- Binding ip address for web
-        "httpPort"              : 60000,                 <- Port for http interface      
-        "mqttServers"           : [                      <- If you want to publish to a mqtt broker (or multiples)
+        "instance"              : "AxpertMax 7.2K",                                             <-  Free label
+        "debug"                 : true,                                                         <- debug mode
+        "debugClass"            : [],                                                           <- you can specify custom classes for debug, ie: ["CORE.queryExternalPower","CORE.sendToInflux"]
+        "communicationClass"    : "usbConnector",                                               <- Class connector (usbConnector for the moment)
+        "portPath"              : "/dev/ttyUSB0",                                               <- the port Path
+        "webserver"             : true,                                                         <- If you want a web interface
+        "webserverDebug"        : false,                                                        <- debug web 
+        "webClass"              : "site",                                                       <- Class for app web.
+        "httpBind"              : "0.0.0.0",                                                    <- Binding ip address for web
+        "httpPort"              : 60000,                                                        <- Port for http interface
+        "gridWattUrl"           : "http://192.168.2.104/emeter/1",                              <- For grid comsumption (i use a shelly powermeter)
+        "gridWattField"         : "power",                                                      <- Field to be extract from the previous json result (gridWattUr)
+        "mqttServers"           : [                                                             <- If you want to publish to a mqtt broker (or multiples)
                                    {
                                     "mqttServer"     : "192.168.2.30",
                                     "mqttServerPort" : 1883,
                                     "mqttTopic"      : "pimpMySuperWatt/superWattGarage"
                                    }
                                   ],
-        "influxDbUrls"          : [                      <- If you want to push results in an influxDb instance (or multiples)
+        "influxDbUrls"          : [                                                             <- If you want to push results in an influxDb instance (or multiples)
                                    {
                                     "username"  : "root",
                                     "password"  : "root",
@@ -96,8 +100,8 @@ venv/bin/pip3 install -r requirements.txt
                                     "dbPort"    : "8086"
                                    }
                                   ],
-        "queryPoolingInterval"  : 30,                     <- Inverter will be queried every 30s (min 2s)
-        "queryPluginInterval"  : 30                       <- Plugin solicitation    
+        "queryPoolingInterval"  : 30,                                                           <- Inverter will be queried every 30s (min 2s)
+        "queryPluginInterval"  : 30                                                             <- Plugin solicitation in seconds
 
 }
 ```
