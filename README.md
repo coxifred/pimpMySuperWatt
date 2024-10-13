@@ -7,7 +7,7 @@
 This is the version 2.0, this version is dedicated to Axpert MAx 7.2K owners (Should also work with others models)
 This software will drive your inverter, expose & stores metrics (including Pylontech Battery stats)
 
-`InfluxDb` and `Grafana` are embbeded inside the container (Can be disabled).
+`InfluxDb` and `Grafana` are embedded inside the container (Can be disabled).
 
 Version 1.0 still available [here](https://github.com/coxifred/pimpMySuperWatt/tree/1.0)
 
