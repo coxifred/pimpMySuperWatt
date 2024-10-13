@@ -32,7 +32,7 @@ This inverter contains 1 port for computer communication (RJ45 look).
 
 ## Small control-ui (Phone responsive)
 
-<img height=600px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true">
+<img height=520px src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/pimpPhone.png?raw=true">
 
 <img src="https://github.com/coxifred/PimpMySuperWatt/blob/master/doc/commands.jpg?raw=true">
 
