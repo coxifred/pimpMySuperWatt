@@ -3,9 +3,10 @@ read VERSION
 test -z "${VERSION}" && VERSION=2.0 
 echo -e "Arch ($(uname -m | cut -c1-3)): \c"
 read ARCH
-test -z "${ARCH}" && ARCH=$(uname -m | cut -c1-3)
+test -z "${ARCH}" && ARCH="-$(uname -m | cut -c1-3)"
+test "${ARCH}" = "-x86" && ARCH=""
 
-VERSION=$VERSION-${ARCH}
+VERSION=$VERSION${ARCH}
 echo "Version to generate : $VERSION press enter to continue " ; read SUITE
 DOCKER_FILE=""
 if [ "$(uname -m | cut -c1-3)" = "arm" ]
