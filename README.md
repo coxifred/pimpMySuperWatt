@@ -56,11 +56,19 @@ docker-compose up
 
 # Docker installation ARM (Raspberry)
 
+```bash
+git clone https://github.com/coxifred/pimpMySuperWatt.git
+cd pimpMySuperWatt
+docker-compose -f docker-compose-arm.yml up
+```
+
 > To do.
 
 # Installation without `Docker` (You have to manage yourself `Grafana` and `InfluxDb` installations)
 
 > Please use python 3.9.18 (i had trouble with fresh versions)
+
+> Some packages need to be installed on your linux/unix distribution: `gcc linux-headers libc-dev musl-dev bash`
 
 ```bash
 git clone https://github.com/coxifred/pimpMySuperWatt.git
