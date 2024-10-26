@@ -1,0 +1,32 @@
+version: "2"
+services:
+  "pimpmysuperwatt":
+    container_name: "pimpmysuperwatt"
+    privileged: true
+    image: "pimpmysuperwatt:2.0-arm"
+    environment:
+       # Start or not embedded services
+       GRAFANA_START: "Y"
+       INFLUXDB_START: "Y"
+       # Debug mode, see also debugClass in superwatt.json
+       # PIMP_DEBUG: "Y"
+    #volumes:
+      # Override configuration if needed
+      #- /root/pimpmysuperwatt/superwatt.json:/pimpmysuperwatt/superwatt.json
+      #- /root/pimpmysuperwatt/plugins/solarposition/solarposition.json:/pimpmysuperwatt/plugins/solarPosition/solarposition.json
+
+      # Persist your influxdb data
+      #- /root/pimpmysuperwatt/influxdb/data:/influxdb-1.8.10-1/data
+
+      # Persist your grafana modifications
+      #- /root/pimpmysuperwatt/grafana/data:/grafana-v11.2.2/data
+     
+      
+    restart: always
+    ports:
+      # PimpMySuperWatt UI
+      - "61000:61000"
+      # Grafana dashboard
+      - "61001:3000"
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
