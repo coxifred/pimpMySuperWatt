@@ -62,8 +62,6 @@ cd pimpMySuperWatt
 docker-compose -f docker-compose-arm.yml up
 ```
 
-> To do.
-
 # Installation without `Docker` (You have to manage yourself `Grafana` and `InfluxDb` installations)
 
 > Please use python 3.9.18 (i had trouble with fresh versions)
@@ -119,7 +117,7 @@ venv/bin/pip3 install -r requirements.txt
 
 }
 ```
-## Docker-compose
+## Docker-compose x86 version (For ARM change pimpmysuperwatt:2.0 to pimpmysuperwatt:2.0-arm)
 
 ```yaml
 version: "2"
@@ -193,6 +191,5 @@ Simply connect with:
 
 # TODO:
 
-- [] Raspberry `Docker` build.
 - [] Enable/Disable debug from UI.
 - [] Events history diplay on UI.
