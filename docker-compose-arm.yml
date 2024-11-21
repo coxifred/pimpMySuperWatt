@@ -3,7 +3,7 @@ services:
   "pimpmysuperwatt":
     container_name: "pimpmysuperwatt"
     privileged: true
-    image: "pimpmysuperwatt:2.0-arm"
+    image: "coxifred/pimpmysuperwatt:2.0-arm"
     environment:
        # Start or not embedded services
        GRAFANA_START: "Y"
